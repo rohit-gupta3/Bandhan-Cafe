@@ -76,7 +76,7 @@ const TESTIMONIALS = [
 
 const GALLERY_VIBES = ["🍺 Craft Beer", "💨 Hookah Lounge", "🥟 Momo Bar", "☕ Coffee Corner", "🏨 Guest Rooms", "🎉 Party Hall", "🎵 Live Music", "🌙 Late Nights"];
 
-export default function CafeHomepage() {
+export const CafeHomepage = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuTab, setMenuTab] = useState(0);
   const [bookTab, setBookTab] = useState("table");
