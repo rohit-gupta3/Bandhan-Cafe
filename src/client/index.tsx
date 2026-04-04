@@ -2,11 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { PATHS } from './paths'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {CafeHomepage }from './components/Home'
 
 const router = createBrowserRouter([
     {
         path: PATHS.home,
-        element: <div>Home</div>
+        element: <CafeHomepage />
     },
     {
         path: PATHS.menu,
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
 
     }
 ])
+
 const Index = (): React.JSX.Element =>{
     return (
         <React.StrictMode>
