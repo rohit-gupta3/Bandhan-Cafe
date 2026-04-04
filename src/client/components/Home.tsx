@@ -52,10 +52,10 @@ const MENU_CATEGORIES = [
 ];
 
 const ROOMS = [
-  { name: "Cozy Single", desc: "Compact, clean & perfect for solo travellers. AC, Wi-Fi, attached bath.", price: "₹1,499", per: "/ night", emoji: "🛏️", guests: "1 Guest", size: "150 sq ft" },
-  { name: "Deluxe Double", desc: "Spacious room with queen bed, balcony view & mini-fridge.", price: "₹2,499", per: "/ night", emoji: "🌙", guests: "2 Guests", size: "280 sq ft" },
-  { name: "Family Suite", desc: "Two-room suite ideal for families. Lounge area, kitchenette & terrace.", price: "₹4,499", per: "/ night", emoji: "🏠", guests: "4 Guests", size: "450 sq ft" },
-  { name: "Party Hall", desc: "Private hall for birthdays, kitty parties & small gatherings. AV setup, catering available.", price: "₹8,999", per: "/ event", emoji: "🎉", guests: "Up to 50", size: "800 sq ft" },
+  { name: "Cozy Stay", desc: "Compact, clean & perfect for solo travellers. AC, Wi-Fi, attached bath.", price: "₹999", per: "/ night", emoji: "🛏️", guests: "2 Guest", size: "150 sq ft" },
+  { name: "Deluxe Double", desc: "Spacious room with queen bed, balcony view & mini-fridge.", price: "₹1,499", per: "/ night", emoji: "🌙", guests: "2 Guests", size: "280 sq ft" },
+  { name: "Family Suite", desc: "Two-room suite ideal for families. Lounge area, kitchenette & terrace.", price: "₹1,999", per: "/ night", emoji: "🏠", guests: "4 Guests", size: "450 sq ft" },
+  { name: "Party Hall", desc: "Private hall for birthdays, kitty parties & small gatherings. AV setup, catering available.", price: "₹9,999", per: "/ event", emoji: "🎉", guests: "Up to 50", size: "800 sq ft" },
 ];
 
 const FEATURES = [
@@ -120,7 +120,7 @@ export default function CafeHomepage() {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }} onClick={() => scrollTo("Home")}>
           <span style={{ fontSize: 24 }}>🍺</span>
-          <span style={{ fontWeight: 700, fontSize: 19, letterSpacing: "-0.5px", color: "#f5efe6" }}>Brew & Bloom</span>
+          <span style={{ fontWeight: 700, fontSize: 19, letterSpacing: "-0.5px", color: "#f5efe6" }}>Bandhan Cafe</span>
         </div>
         <div style={{ display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
           {NAV_LINKS.map((l) => {
@@ -385,9 +385,9 @@ export default function CafeHomepage() {
                 </div>
                 <select style={{ ...inputStyle, color: "#8a7a6c", appearance: "none" }}>
                   <option value="">Room Type</option>
-                  <option>🛏️ Cozy Single — ₹1,499/night</option>
-                  <option>🌙 Deluxe Double — ₹2,499/night</option>
-                  <option>🏠 Family Suite — ₹4,499/night</option>
+                  <option>🛏️ Cozy Stay — ₹999/night</option>
+                  <option>🌙 Deluxe Double — ₹1,499/night</option>
+                  <option>🏠 Family Suite — ₹1,999/night</option>
                 </select>
                 <select style={{ ...inputStyle, color: "#8a7a6c", appearance: "none" }}>
                   <option value="">Number of Guests</option>
@@ -435,19 +435,19 @@ export default function CafeHomepage() {
         padding: "48px 24px", background: "#0e0d0c", color: "#6b5b4e",
         textAlign: "center", fontSize: 14, lineHeight: 1.8,
       }}>
-        <div style={{ fontSize: 22, marginBottom: 6 }}>🍺 <span style={{ fontWeight: 700, color: "#f5efe6" }}>Brew & Bloom</span></div>
+        <div style={{ fontSize: 22, marginBottom: 6 }}>🍺 <span style={{ fontWeight: 700, color: "#f5efe6" }}>Bandhan Cafe</span></div>
         <div style={{ color: "#8a7a6c", fontSize: 13 }}>Café • Beer Bar • Hookah Lounge • Guest Lodge</div>
-        <div>123 Café Lane, Hauz Khas Village, New Delhi</div>
+        <div>Taulihawa, Kapilvastu, Lumbini, Nepal</div>
         <div>Open Daily — 9:00 AM to 12:00 AM</div>
         <div style={{ marginTop: 16, display: "flex", gap: 20, justifyContent: "center", fontSize: 13 }}>
-          {["Instagram", "Twitter", "Google Maps", "Zomato", "Booking.com"].map(s => (
+          {["Instagram", "Tiktok", "Google Maps",].map(s => (
             <span key={s} style={{ cursor: "pointer", color: "#c8a44e", borderBottom: "1px solid transparent", transition: "border .2s" }}
               onMouseEnter={e => e.currentTarget.style.borderBottom = "1px solid #c8a44e"}
               onMouseLeave={e => e.currentTarget.style.borderBottom = "1px solid transparent"}
             >{s}</span>
           ))}
         </div>
-        <div style={{ marginTop: 24, fontSize: 12, color: "#4a3f35" }}>©️ 2026 Brew & Bloom. All rights reserved.</div>
+        <div style={{ marginTop: 24, fontSize: 12, color: "#4a3f35" }}>©️ 2026 Bandhan Cafe. All rights reserved.</div>
       </footer>
     </div>
   );
