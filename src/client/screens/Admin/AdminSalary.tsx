@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AdminLayout from "./AdminLayout";
+import { Loader } from "../../components/Loader";
 
 interface SalaryRecord {
   id: number;
@@ -135,11 +135,7 @@ const AdminSalary: React.FC = () => {
         </p>
       </div>
 
-      {loading ? (
-        <div className="admin-loading">
-          <p>Loading salary data...</p>
-        </div>
-      ) : (
+      {loading ? <Loader /> : (
         <>
           <div className="admin-stats-grid">
             <div className="admin-stat-card">
