@@ -1,0 +1,67 @@
+.error-page {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #e8e0d4;
+  background: #121010;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.error-container {
+  max-width: 500px;
+  width: 100%;
+}
+
+.error-emoji {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.error-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #f5efe6;
+  margin-bottom: 16px;
+  letter-spacing: -1.5px;
+}
+
+.error-subtitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #c8a44e;
+  margin-bottom: 24px;
+}
+
+.error-message {
+  color: #8a7a6c;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.error-button {
+  background: linear-gradient(135deg, #c8a44e, #a6832e);
+  color: #121010;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(200, 164, 78, .25);
+  transition: all .2s ease;
+}
+
+.error-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(200, 164, 78, .35);
+}
+
+.error-footer {
+  color: #6b5b4e;
+  font-size: 14px;
+  margin-top: 24px;
+}
