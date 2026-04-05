@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
 
-export const LoginPage = () => {
+export const LoginPage = (): React.JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
