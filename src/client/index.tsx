@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CafeHomepage } from "./screens/Home";
 import { LoginPage } from "./screens/LoginPage";
 import { ErrorPage } from "./screens/ErrorPage";
+import Menu from "./screens/Menu";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
   },
   {
     path: PATHS.menu,
-    element: <div>Menu</div>,
+    element: <Menu />,
     errorElement: <ErrorPage />,
   },
   {

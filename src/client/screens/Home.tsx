@@ -4,6 +4,7 @@ import {
   GALLERY_VIBES,
   MENU_CATEGORIES,
   NAV_LINKS,
+  POPULAR_ITEMS,
   ROOMS,
   TESTIMONIALS,
 } from "../contants";
@@ -52,7 +53,6 @@ interface NavLink {
 
 const CafeHomepage: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [menuTab, setMenuTab] = useState(0);
   const [roomModal, setRoomModal] = useState<Room | null>(null);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const CafeHomepage: React.FC = () => {
       <Hero scrollTo={scrollTo} />
       <VibeSection />
       <FeaturesSection />
-      <MenuSection menuTab={menuTab} setMenuTab={setMenuTab} />
+      <MenuSection />
       <RoomsSection rooms={ROOMS} onRoomClick={handleRoomClick} />
       <RoomModal room={roomModal} onClose={closeModal} />
       <TestimonialsSection />
@@ -207,44 +207,49 @@ const FeaturesSection: React.FC = memo(() => (
   </section>
 ));
 
-interface MenuSectionProps {
-  menuTab: number;
-  setMenuTab: (tab: number) => void;
-}
+const MenuSection: React.FC = memo(() => {
+  const scrollTo = useCallback((sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
-const MenuSection: React.FC<MenuSectionProps> = memo(
-  ({ menuTab, setMenuTab }) => (
+  return (
     <section id="Menu" className="menu-section">
       <div className="menu-container">
-        <h2 className="section-title">Our Menu</h2>
-        <p className="section-subtitle">Something for every mood</p>
-        <div className="menu-tabs">
-          {MENU_CATEGORIES.map((category, index) => (
-            <button
-              key={category.category}
-              onClick={() => setMenuTab(index)}
-              className={`menu-tab ${menuTab === index ? "active" : ""}`}
-            >
-              {category.icon} {category.category}
-            </button>
-          ))}
+        <div className="section-header">
+          <h2 className="section-title">Popular Dishes</h2>
+          <p className="section-subtitle">Customer favorites from our menu</p>
         </div>
+
         <div className="menu-grid">
-          {MENU_CATEGORIES[menuTab].items.map((item) => (
-            <div key={item.name} className="menu-item">
+          {POPULAR_ITEMS.map((item, index) => (
+            <div key={index} className="menu-item">
               <div className="menu-item-emoji">{item.emoji}</div>
               <div className="menu-item-header">
                 <span className="menu-item-name">{item.name}</span>
                 <span className="menu-item-price">{item.price}</span>
               </div>
               <div className="menu-item-desc">{item.desc}</div>
+              <div className="menu-item-category">{item.category}</div>
             </div>
           ))}
         </div>
+
+        <div className="menu-explore-container">
+          <button
+            onClick={() => (window.location.href = "/menu")}
+            className="explore-menu-button"
+          >
+            Explore All Menu
+            <span className="button-arrow">→</span>
+          </button>
+        </div>
       </div>
     </section>
-  ),
-);
+  );
+});
 
 interface RoomsSectionProps {
   rooms: Room[];

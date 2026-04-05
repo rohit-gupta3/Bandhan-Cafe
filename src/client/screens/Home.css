@@ -401,6 +401,54 @@
   line-height: 1.5;
 }
 
+.menu-item-category {
+  font-size: 11px;
+  color: var(--accent-color);
+  background: rgba(200, 164, 78, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.menu-explore-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.explore-menu-button {
+  background: var(--gradient-accent);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.explore-menu-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.button-arrow {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.explore-menu-button:hover .button-arrow {
+  transform: translateX(4px);
+}
+
 /* Rooms */
 .rooms-section {
   padding: 80px 24px;
