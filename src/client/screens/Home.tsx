@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
-import { FEATURES, GALLERY_VIBES, MENU_CATEGORIES, NAV_LINKS, ROOMS, TESTIMONIALS } from "../contants";
-import { ContactSection } from "./Contact";
+import {
+  FEATURES,
+  GALLERY_VIBES,
+  MENU_CATEGORIES,
+  NAV_LINKS,
+  ROOMS,
+  TESTIMONIALS,
+} from "../contants";
+import { ContactSection } from "../components/Contact";
 import "./Home.css";
 
 interface Room {
@@ -89,7 +96,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = memo(({ scrolled, scrollTo }) => (
-  <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+  <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
     <div className="navbar-brand" onClick={() => scrollTo("Home")}>
       <span>🍺</span>
       <span>Bandhan Cafe</span>
@@ -103,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ scrolled, scrollTo }) => (
           <button
             key={link}
             onClick={() => scrollTo(id)}
-            className={`nav-button ${isLogin ? 'login' : ''} ${isBook ? 'book' : ''}`}
+            className={`nav-button ${isLogin ? "login" : ""} ${isBook ? "book" : ""}`}
           >
             {link}
           </button>
@@ -122,19 +129,38 @@ const Hero: React.FC<HeroProps> = memo(({ scrollTo }) => (
     <div className="hero-decoration-1" />
     <div className="hero-decoration-2" />
     <div className="hero-emojis">
-      <span>☕</span><span>🍺</span><span>💨</span><span>🥟</span><span>🏨</span>
+      <span>☕</span>
+      <span>🍺</span>
+      <span>💨</span>
+      <span>🥟</span>
+      <span>🏨</span>
     </div>
     <h1 className="hero-title">
-      Sip. Smoke. Eat. Stay.<br />
+      Sip. Smoke. Eat. Stay.
+      <br />
       <span>All Under One Roof.</span>
     </h1>
     <p className="hero-subtitle">
-      Specialty coffee by morning, craft beer by evening, premium hookah all day, momos that slap — plus cozy rooms to crash and a private hall for your next celebration.
+      Specialty coffee by morning, craft beer by evening, premium hookah all
+      day, momos that slap — plus cozy rooms to crash and a private hall for
+      your next celebration.
     </p>
     <div className="hero-buttons">
-      <button onClick={() => scrollTo("Menu")} className="hero-button primary">Explore Menu</button>
-      <button onClick={() => scrollTo("Rooms")} className="hero-button secondary">View Rooms</button>
-      <button onClick={() => scrollTo("Contact")} className="hero-button outline">Contact Us</button>
+      <button onClick={() => scrollTo("Menu")} className="hero-button primary">
+        Explore Menu
+      </button>
+      <button
+        onClick={() => scrollTo("Rooms")}
+        className="hero-button secondary"
+      >
+        View Rooms
+      </button>
+      <button
+        onClick={() => scrollTo("Contact")}
+        className="hero-button outline"
+      >
+        Contact Us
+      </button>
     </div>
     <div className="hero-stats">
       {[
@@ -142,7 +168,7 @@ const Hero: React.FC<HeroProps> = memo(({ scrollTo }) => (
         ["10K+", "Happy Guests"],
         ["60+", "Menu Items"],
         ["12AM", "Open Late"],
-        ["4", "Room Types"]
+        ["4", "Room Types"],
       ].map(([value, label]) => (
         <div key={label} className="stat-item">
           <div className="stat-value">{value}</div>
@@ -156,7 +182,9 @@ const Hero: React.FC<HeroProps> = memo(({ scrollTo }) => (
 const VibeSection: React.FC = memo(() => (
   <section className="vibe-section">
     {GALLERY_VIBES.map((vibe) => (
-      <span key={vibe} className="vibe-tag">{vibe}</span>
+      <span key={vibe} className="vibe-tag">
+        {vibe}
+      </span>
     ))}
   </section>
 ));
@@ -164,7 +192,9 @@ const VibeSection: React.FC = memo(() => (
 const FeaturesSection: React.FC = memo(() => (
   <section className="features-section">
     <h2 className="section-title">Why Everyone's Talking About Us</h2>
-    <p className="section-subtitle">Café by day, bar by night, guest lodge for the brave</p>
+    <p className="section-subtitle">
+      Café by day, bar by night, guest lodge for the brave
+    </p>
     <div className="features-grid">
       {FEATURES.map((feature) => (
         <div key={feature.title} className="feature-card">
@@ -182,71 +212,83 @@ interface MenuSectionProps {
   setMenuTab: (tab: number) => void;
 }
 
-const MenuSection: React.FC<MenuSectionProps> = memo(({ menuTab, setMenuTab }) => (
-  <section id="Menu" className="menu-section">
-    <div className="menu-container">
-      <h2 className="section-title">Our Menu</h2>
-      <p className="section-subtitle">Something for every mood</p>
-      <div className="menu-tabs">
-        {MENU_CATEGORIES.map((category, index) => (
-          <button
-            key={category.category}
-            onClick={() => setMenuTab(index)}
-            className={`menu-tab ${menuTab === index ? 'active' : ''}`}
-          >
-            {category.icon} {category.category}
-          </button>
-        ))}
-      </div>
-      <div className="menu-grid">
-        {MENU_CATEGORIES[menuTab].items.map((item) => (
-          <div key={item.name} className="menu-item">
-            <div className="menu-item-emoji">{item.emoji}</div>
-            <div className="menu-item-header">
-              <span className="menu-item-name">{item.name}</span>
-              <span className="menu-item-price">{item.price}</span>
+const MenuSection: React.FC<MenuSectionProps> = memo(
+  ({ menuTab, setMenuTab }) => (
+    <section id="Menu" className="menu-section">
+      <div className="menu-container">
+        <h2 className="section-title">Our Menu</h2>
+        <p className="section-subtitle">Something for every mood</p>
+        <div className="menu-tabs">
+          {MENU_CATEGORIES.map((category, index) => (
+            <button
+              key={category.category}
+              onClick={() => setMenuTab(index)}
+              className={`menu-tab ${menuTab === index ? "active" : ""}`}
+            >
+              {category.icon} {category.category}
+            </button>
+          ))}
+        </div>
+        <div className="menu-grid">
+          {MENU_CATEGORIES[menuTab].items.map((item) => (
+            <div key={item.name} className="menu-item">
+              <div className="menu-item-emoji">{item.emoji}</div>
+              <div className="menu-item-header">
+                <span className="menu-item-name">{item.name}</span>
+                <span className="menu-item-price">{item.price}</span>
+              </div>
+              <div className="menu-item-desc">{item.desc}</div>
             </div>
-            <div className="menu-item-desc">{item.desc}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-));
+    </section>
+  ),
+);
 
 interface RoomsSectionProps {
   rooms: Room[];
   onRoomClick: (room: Room) => void;
 }
 
-const RoomsSection: React.FC<RoomsSectionProps> = memo(({ rooms, onRoomClick }) => (
-  <section id="Rooms" className="rooms-section">
-    <h2 className="section-title">Stay With Us</h2>
-    <p className="section-subtitle">Cozy rooms upstairs & a private hall for your celebrations</p>
-    <div className="rooms-grid">
-      {rooms.map((room) => (
-        <div key={room.name} className="room-card" onClick={() => onRoomClick(room)}>
-          <div className="room-card-header">
-            <div className="room-emoji">{room.emoji}</div>
-          </div>
-          <div style={{ padding: "18px 22px 22px" }}>
-            <div className="room-name">{room.name}</div>
-            <div className="room-desc">{room.desc}</div>
-            <div className="room-tags">
-              {[room.guests, room.size].map(tag => (
-                <span key={tag} className="room-tag">{tag}</span>
-              ))}
+const RoomsSection: React.FC<RoomsSectionProps> = memo(
+  ({ rooms, onRoomClick }) => (
+    <section id="Rooms" className="rooms-section">
+      <h2 className="section-title">Stay With Us</h2>
+      <p className="section-subtitle">
+        Cozy rooms upstairs & a private hall for your celebrations
+      </p>
+      <div className="rooms-grid">
+        {rooms.map((room) => (
+          <div
+            key={room.name}
+            className="room-card"
+            onClick={() => onRoomClick(room)}
+          >
+            <div className="room-card-header">
+              <div className="room-emoji">{room.emoji}</div>
             </div>
-            <div className="room-price">
-              <span className="room-price-value">{room.price}</span>
-              <span className="room-price-unit">{room.per}</span>
+            <div style={{ padding: "18px 22px 22px" }}>
+              <div className="room-name">{room.name}</div>
+              <div className="room-desc">{room.desc}</div>
+              <div className="room-tags">
+                {[room.guests, room.size].map((tag) => (
+                  <span key={tag} className="room-tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="room-price">
+                <span className="room-price-value">{room.price}</span>
+                <span className="room-price-unit">{room.per}</span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
-  </section>
-));
+        ))}
+      </div>
+    </section>
+  ),
+);
 
 interface RoomModalProps {
   room: Room | null;
@@ -269,20 +311,42 @@ const RoomModal: React.FC<RoomModalProps> = memo(({ room, onClose }) => {
         <div className="modal-body">
           <p className="modal-description">{room.desc}</p>
           <div className="modal-tags">
-            {[room.guests, room.size].map(tag => (
-              <span key={tag} className="modal-tag">{tag}</span>
+            {[room.guests, room.size].map((tag) => (
+              <span key={tag} className="modal-tag">
+                {tag}
+              </span>
             ))}
           </div>
           <form className="modal-form">
-            <input type="text" placeholder="Your Name" className="modal-input" />
-            <input type="text" placeholder="Phone or Email" className="modal-input" />
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="modal-input"
+            />
+            <input
+              type="text"
+              placeholder="Phone or Email"
+              className="modal-input"
+            />
             <div className="modal-input-row">
-              <input type="date" placeholder="Check-in" className="modal-input" />
-              <input type="date" placeholder="Check-out" className="modal-input" />
+              <input
+                type="date"
+                placeholder="Check-in"
+                className="modal-input"
+              />
+              <input
+                type="date"
+                placeholder="Check-out"
+                className="modal-input"
+              />
             </div>
-            <button type="submit" className="modal-button">Book {room.name}</button>
+            <button type="submit" className="modal-button">
+              Book {room.name}
+            </button>
           </form>
-          <button onClick={onClose} className="modal-close">Close</button>
+          <button onClick={onClose} className="modal-close">
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -293,11 +357,15 @@ const TestimonialsSection: React.FC = memo(() => (
   <section className="testimonials-section">
     <div className="testimonials-container">
       <h2 className="section-title">What Our Guests Say</h2>
-      <p className="section-subtitle">Real talk from regulars & overnight guests</p>
+      <p className="section-subtitle">
+        Real talk from regulars & overnight guests
+      </p>
       <div className="testimonials-grid">
         {TESTIMONIALS.map((testimonial) => (
           <div key={testimonial.name} className="testimonial-card">
-            <div className="testimonial-rating">{"★".repeat(testimonial.rating)}</div>
+            <div className="testimonial-rating">
+              {"★".repeat(testimonial.rating)}
+            </div>
             <p className="testimonial-text">"{testimonial.text}"</p>
             <div className="testimonial-author">{testimonial.name}</div>
           </div>
@@ -312,15 +380,21 @@ const Footer: React.FC = memo(() => (
     <div className="footer-brand">
       🍺 <span>Bandhan Cafe</span>
     </div>
-    <div className="footer-description">Café • Beer Bar • Hookah Lounge • Guest Lodge</div>
+    <div className="footer-description">
+      Café • Beer Bar • Hookah Lounge • Guest Lodge
+    </div>
     <div>Taulihawa, Kapilvastu, Lumbini, Nepal</div>
     <div>Open Daily — 9:00 AM to 12:00 AM</div>
     <div className="footer-links">
-      {["Instagram", "Tiktok", "Google Maps"].map(social => (
-        <span key={social} className="footer-link">{social}</span>
+      {["Instagram", "Tiktok", "Google Maps"].map((social) => (
+        <span key={social} className="footer-link">
+          {social}
+        </span>
       ))}
     </div>
-    <div className="footer-copyright">©️ 2026 Bandhan Cafe. All rights reserved.</div>
+    <div className="footer-copyright">
+      ©️ 2026 Bandhan Cafe. All rights reserved.
+    </div>
   </footer>
 ));
 
