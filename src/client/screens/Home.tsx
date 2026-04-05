@@ -109,7 +109,13 @@ const Navbar: React.FC<NavbarProps> = memo(({ scrolled, scrollTo }) => (
         return (
           <button
             key={link}
-            onClick={() => scrollTo(id)}
+            onClick={() => {
+              if (isLogin) {
+                window.location.href = "/login";
+              } else {
+                scrollTo(id);
+              }
+            }}
             className={`nav-button ${isLogin ? "login" : ""} ${isBook ? "book" : ""}`}
           >
             {link}

@@ -21,13 +21,15 @@ const server = app
   .on("error", (err: any) => {
     if (err.code === "EADDRINUSE") {
       console.warn(`Port ${PORT} is in use, trying a random available port...`);
-      app.listen(0, () => {
-        const address = (app as any).address();
+      const fallbackServer = app.listen(0, () => {
+        const address = fallbackServer.address();
         const runtimePort =
           typeof address === "object" && address ? address.port : "unknown";
         console.log(
           `🚀 Bandhan Cafe server running on http://localhost:${runtimePort}`,
         );
+        console.log(`📱 Frontend proxied via: http://localhost:8080`);
+        console.log(`🔧 Environment: ${process.env.NODE_ENV || "development"}`);
       });
     } else {
       console.error(err);
