@@ -1,10 +1,12 @@
 import React, { memo } from "react";
 import "./Contact.css";
+import Rishi from "../../assets/rishi.jpg";
+import Naitik from "../../assets/naitik.jpg";
 
 interface OwnerInfo {
   name: string;
   title: string;
-  image: string;
+  image: any;
   phone: string;
   email: string;
   description: string;
@@ -14,7 +16,7 @@ const OWNERS_INFO: OwnerInfo[] = [
   {
     name: "Rishi Gupta",
     title: "Founder & Owner",
-    image: "/images/owner1.jpg",
+    image: Rishi,
     phone: "+977-9749469976",
     email: "bandhanmarriagehouse@gmail.com",
     description: "Passionate about creating memorable experiences, Rishi brings over 5 years of hospitality expertise to Bandhan Cafe. From crafting the perfect espresso to hosting unforgettable celebrations, he's dedicated to making every visit special."
@@ -22,7 +24,7 @@ const OWNERS_INFO: OwnerInfo[] = [
   {
     name: "Naitik Gupta",
     title: "Co-Founder & Operations Manager",
-    image: "/images/owner2.jpg",
+    image: Naitik,
     phone: "+977-9817579825",
     email: "naitik@bandhancafe.com",
     description: "With a keen eye for detail and a love for culinary arts, Naitik ensures every dish and drink meets the highest standards. His innovative approach to menu design and customer service keeps Bandhan Cafe at the forefront of the local dining scene."

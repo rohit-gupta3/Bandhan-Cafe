@@ -11,7 +11,7 @@ export const POPULAR_ITEMS = [
   {
     name: "Chicken Chowmein",
     desc: "Stir-fried noodles with tender chicken",
-    price: "₹190",
+    price: "₹100",
     emoji: "🍜",
     category: "Chowmein",
   },
@@ -26,22 +26,22 @@ export const POPULAR_ITEMS = [
     name: "Chicken Sekuwa",
     desc: "Nepali style grilled chicken skewers",
     price: "₹280",
-    emoji: "🔥",
+    emoji: "🍖",
     category: "Chicken Items",
   },
   {
     name: "Fried Rice",
     desc: "Aromatic rice with fresh vegetables",
     price: "₹90",
-    emoji: "🥕",
+    emoji: "🍚",
     category: "Rice Items",
   },
   {
-    name: "Mutton Sekuwa",
-    desc: "Grilled mutton with Nepali spices",
-    price: "₹380",
-    emoji: "🍖",
-    category: "Mutton Items",
+    name: "Thakali Khana",
+    desc: "Flavorful Nepali meal with rice, dal, vegetable curry, and meat",
+    price: "₹250",
+    emoji: "🍛",
+    category: "Meal Combos",
   },
 ];
 
@@ -570,18 +570,18 @@ export const ROOMS = [
 export const FEATURES = [
   {
     icon: "🍺",
-    title: "Craft on Tap",
-    text: "Rotating craft beers brewed locally — always something new to try.",
+    title: "Beer & Drinks",
+    text: "Chilled drinks, cocktails, and mocktails to keep the good times flowing.",
   },
   {
     icon: "💨",
     title: "Premium Hookah",
-    text: "Imported flavours, clean setups, and clouds that hit different.",
+    text: "Imported flavours, clean setups, and cloud that hit different.",
   },
   {
     icon: "🥟",
     title: "Killer Momos",
-    text: "Steamed, fried, or tandoori — our momos have a cult following.",
+    text: "Steamed, fried, or Chilly — our momos have a cult following.",
   },
   {
     icon: "🏨",
@@ -594,9 +594,9 @@ export const FEATURES = [
     text: "Private hall for parties & gatherings with full catering support.",
   },
   {
-    icon: "🎵",
-    title: "Live Nights",
-    text: "DJs on Fridays, acoustic weekends, good vibes always.",
+    icon: "📺",
+    title: "Live Streaming",
+    text: "Score big on game nights with our TV screens and lively atmosphere.",
   },
 ];
 
@@ -624,12 +624,25 @@ export const TESTIMONIALS = [
 ];
 
 export const GALLERY_VIBES = [
-  "🍺 Craft Beer",
+  "🍺 Beer/Alcohol",
   "💨 Hookah Lounge",
-  "🥟 Momo Bar",
   "☕ Coffee Corner",
   "🏨 Guest Rooms",
   "🎉 Party Hall",
-  "🎵 Live Music",
+  "📺 TV screens for live sports",
   "🌙 Late Nights",
 ];
+
+export const SOCIAL_LINKS = [ {
+  name: "Instagram",
+  url: "https://www.instagram.com/bandhan.cafe",
+  icon: "📸",
+}, {
+  name: "TikTok",
+  url: "https://www.tiktok.com/@bandhan.cafe",
+  icon: "🎵",
+},{
+  name: "Google Maps",
+  url: "https://maps.app.goo.gl/177hPfEhEAbYvH6t9",
+  icon: "📍",
+}];

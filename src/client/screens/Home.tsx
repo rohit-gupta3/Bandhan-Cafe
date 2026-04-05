@@ -6,6 +6,7 @@ import {
   NAV_LINKS,
   POPULAR_ITEMS,
   ROOMS,
+  SOCIAL_LINKS,
   TESTIMONIALS,
 } from "../contants";
 import { ContactSection } from "../components/Contact";
@@ -147,7 +148,7 @@ const Hero: React.FC<HeroProps> = memo(({ scrollTo }) => (
       <span>All Under One Roof.</span>
     </h1>
     <p className="hero-subtitle">
-      Specialty coffee by morning, craft beer by evening, premium hookah all
+      Specialty coffee by morning,beer/drinks and premium hookah all
       day, momos that slap — plus cozy rooms to crash and a private hall for
       your next celebration.
     </p>
@@ -171,9 +172,9 @@ const Hero: React.FC<HeroProps> = memo(({ scrollTo }) => (
     <div className="hero-stats">
       {[
         ["4.9 ★", "Google Rating"],
-        ["10K+", "Happy Guests"],
+        ["5K+", "Happy Guests"],
         ["60+", "Menu Items"],
-        ["12AM", "Open Late"],
+        ["8AM-10PM", "Every Day"],
         ["4", "Room Types"],
       ].map(([value, label]) => (
         <div key={label} className="stat-item">
@@ -394,13 +395,19 @@ const Footer: React.FC = memo(() => (
     <div className="footer-description">
       Café • Beer Bar • Hookah Lounge • Guest Lodge
     </div>
-    <div>Taulihawa, Kapilvastu, Lumbini, Nepal</div>
-    <div>Open Daily — 9:00 AM to 12:00 AM</div>
+    <div>Taulihawa, Kapilvastu - 01, Lumbini, Nepal</div>
+    <div>Open Daily — 8:00 AM to 10:00 PM</div>
     <div className="footer-links">
-      {["Instagram", "Tiktok", "Google Maps"].map((social) => (
-        <span key={social} className="footer-link">
-          {social}
-        </span>
+      {SOCIAL_LINKS.map((social) => (
+        <span><a
+          key={social.name}
+          href={social.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-link"
+        >
+          {social.icon} {social.name}
+        </a> </ span>
       ))}
     </div>
     <div className="footer-copyright">

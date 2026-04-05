@@ -792,6 +792,10 @@
 }
 
 /* Footer */
+a {
+  text-decoration: none;
+}
+
 .footer {
   padding: 48px 24px;
   background: var(--dark-bg);
