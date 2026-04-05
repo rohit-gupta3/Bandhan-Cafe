@@ -1,4 +1,4 @@
-export const NAV_LINKS = ["Home", "Menu", "Rooms", "Book a Table", "Login"];
+export const NAV_LINKS = ["Home", "Menu", "Rooms", "Contact", "Login"];
 
 export const MENU_CATEGORIES = [
   {

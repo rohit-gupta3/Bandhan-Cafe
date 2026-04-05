@@ -1,7 +1,7 @@
 import React from "react";
 import "./ErrorPage.css";
 
-export const ErrorPage = () => {
+export const ErrorPage = (): React.JSX.Element => {
   const handleGoHome = () => {
     window.location.href = "/";
   };

@@ -1,0 +1,235 @@
+/* Contact.css */
+.contact-section {
+  padding: 80px 24px;
+  background: linear-gradient(170deg, #1e1816, #2a2018);
+}
+
+.contact-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 48px;
+  align-items: start;
+}
+
+.owner-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px solid rgba(200, 164, 78, 0.15);
+  padding: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.owner-image-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.owner-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(200, 164, 78, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.owner-image:hover {
+  transform: scale(1.05);
+}
+
+.owner-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--gradient-primary);
+  color: var(--primary-bg);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(200, 164, 78, 0.3);
+}
+
+.owner-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.owner-title {
+  font-size: 16px;
+  color: var(--accent-color);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.owner-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.owner-contact-methods {
+  margin-top: 20px;
+}
+
+.owner-contact-methods .contact-item {
+  margin-bottom: 12px;
+}
+
+.owner-contact-methods .contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+.contact-icon {
+  font-size: 24px;
+  min-width: 24px;
+}
+
+.contact-details {
+  flex: 1;
+}
+
+.contact-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.contact-value {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.contact-button {
+  background: var(--gradient-primary);
+  color: var(--primary-bg);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(200, 164, 78, 0.3);
+}
+
+.contact-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(200, 164, 78, 0.4);
+}
+
+.contact-button.call {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.contact-button.whatsapp {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+}
+
+.contact-button.email {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.contact-note {
+  background: rgba(200, 164, 78, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(200, 164, 78, 0.2);
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.note-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.note-content h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: 8px;
+}
+
+.note-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .owner-card,
+  .contact-methods {
+    padding: 24px;
+  }
+
+  .contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .contact-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .contact-note {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 60px 16px;
+  }
+
+  .owner-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .owner-name {
+    font-size: 20px;
+  }
+}
