@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 
 export const LoginPage = (): React.JSX.Element => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login attempt:", { email, password });
+    if(username === "bandhan" && password === "rohit") {
+      window.location.href = "/admin";
+    }
   };
 
   return (
@@ -20,10 +21,10 @@ export const LoginPage = (): React.JSX.Element => {
 
         <form className="login-form" onSubmit={handleSubmit}>
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="login-input"
             required
           />
