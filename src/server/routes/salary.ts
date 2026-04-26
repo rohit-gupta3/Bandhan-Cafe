@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { supabaseClient } from "../infra/supabase";
 
 export let salaries = [
   {
@@ -42,8 +43,24 @@ export let salaries = [
 export const salaryRoutes = (): Router => {
   const app = Router();
 
-  app.get("/", (req, res) => {
-    res.json({ salaries });
+  app.get("/", async (req, res) => {
+    try {
+      const { data, error } = await supabaseClient.from("Salary").select("*");
+
+      if (error) {
+        console.error("Supabase error:", error);
+        return res.json({ salaries });
+      }
+
+      if (data && data.length > 0) {
+        return res.json({ salaries: data });
+      }
+
+      res.json({ salaries });
+    } catch (err) {
+      console.error("Error fetching salaries:", err);
+      res.json({ salaries });
+    }
   });
 
   app.post("/", (req, res) => {

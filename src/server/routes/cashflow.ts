@@ -1,4 +1,5 @@
 import express, { type Router } from "express";
+import { supabaseClient } from "../infra/supabase";
 
 export let cashflow = [
   {
@@ -51,8 +52,19 @@ export let cashflow = [
 export const cashflowRoutes = (): Router => {
   const app = express.Router();
 
-  app.get("/", (req, res) => {
-    res.json({ cashflow });
+  app.get("/", async (_req, res) => {
+    try {
+      const { data, error } = await supabaseClient.from("Cashflow").select("*");
+      if (error) {
+        console.error("Supabase error:", error);
+        return res.json({ cashflow });
+      }
+
+      res.json({ cashflow: data });
+    } catch (err) {
+      console.error("Error fetching cashflow:", err);
+      res.json({ cashflow });
+    }
   });
 
   app.post("/", (req, res) => {
