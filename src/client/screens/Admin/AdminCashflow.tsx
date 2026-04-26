@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { CashflowItem } from "../../../types";
 
-interface CashflowItem {
-  id: number;
-  type: "revenue" | "expense";
-  category: string;
-  amount: number;
-  description: string;
-  date: string;
-  paymentMethod: string;
-  item?: string;
-}
-
-const AdminCashflow: React.FC = () => {
+export const AdminCashflow: React.FC = () => {
   const [cashflow, setCashflow] = useState<CashflowItem[]>([]);
   const [activeTab, setActiveTab] = useState<
     "overview" | "revenue" | "expenses"
@@ -28,9 +18,6 @@ const AdminCashflow: React.FC = () => {
     description: "",
     date: new Date().toISOString().split("T")[0],
     paymentMethod: "cash",
-    vendor: "",
-    item: "",
-    quantity: 1,
   });
 
   useEffect(() => {
@@ -97,9 +84,6 @@ const AdminCashflow: React.FC = () => {
       description: item.description,
       date: item.date,
       paymentMethod: item.paymentMethod,
-      vendor: "",
-      item: "",
-      quantity: 1,
     });
     setShowModal(true);
   };
@@ -127,9 +111,6 @@ const AdminCashflow: React.FC = () => {
       description: "",
       date: new Date().toISOString().split("T")[0],
       paymentMethod: "cash",
-      vendor: "",
-      item: "",
-      quantity: 1,
     });
   };
 
@@ -220,7 +201,6 @@ const AdminCashflow: React.FC = () => {
             <tr>
               <th>Date</th>
               <th>Category</th>
-              <th>Quantity</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -230,7 +210,6 @@ const AdminCashflow: React.FC = () => {
               <tr key={item.id}>
                 <td>{new Date(item.date).toLocaleDateString()}</td>
                 <td>{item.category}</td>
-                <td>{item.item || "-"}</td>
                 <td>₹{item.amount.toLocaleString()}</td>
                 <td>
                   <div className="admin-actions">
@@ -394,21 +373,6 @@ const AdminCashflow: React.FC = () => {
                         <option value="Other">Other</option>
                       </select>
                     </div>
-                    <div className="admin-form-group">
-                      <label className="admin-form-label">Item Name</label>
-                      <input
-                        type="text"
-                        className="admin-form-input"
-                        value={formData.item}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            item: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
                   </div>
 
                   <div className="admin-form-row">
@@ -425,21 +389,6 @@ const AdminCashflow: React.FC = () => {
                           })
                         }
                         required
-                      />
-                    </div>
-                    <div className="admin-form-group">
-                      <label className="admin-form-label">Quantity</label>
-                      <input
-                        type="number"
-                        className="admin-form-input"
-                        value={formData.quantity}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            quantity: Number(e.target.value),
-                          })
-                        }
-                        min="1"
                       />
                     </div>
                   </div>
@@ -497,20 +446,6 @@ const AdminCashflow: React.FC = () => {
                         <option value="Marketing">Marketing</option>
                         <option value="Other">Other</option>
                       </select>
-                    </div>
-                    <div className="admin-form-group">
-                      <label className="admin-form-label">Vendor</label>
-                      <input
-                        type="text"
-                        className="admin-form-input"
-                        value={formData.vendor}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            vendor: e.target.value,
-                          })
-                        }
-                      />
                     </div>
                   </div>
 
@@ -587,5 +522,3 @@ const AdminCashflow: React.FC = () => {
     </>
   );
 };
-
-export default AdminCashflow;

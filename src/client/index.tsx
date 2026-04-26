@@ -10,7 +10,7 @@ import AdminLayout from "./screens/Admin/AdminLayout";
 import AdminDashboard from "./screens/Admin/AdminDashboard";
 import AdminEmployees from "./screens/Admin/AdminEmployees";
 import AdminSalary from "./screens/Admin/AdminSalary";
-import AdminCashflow from "./screens/Admin/AdminCashflow";
+import { AdminCashflow } from "./screens/Admin/AdminCashflow";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
-        path: "employees", 
+        path: "employees",
         element: <AdminEmployees />,
       },
       {
