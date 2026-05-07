@@ -223,9 +223,7 @@ const AdminMenu: React.FC = () => {
         <div className="admin-alert admin-alert-success">{success}</div>
       )}
 
-      <div
-        style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "20px" }}
-      >
+      <div className="admin-menu-layout">
         {/* Categories Sidebar */}
         <div className="admin-card">
           <h3 className="admin-card-title">Categories</h3>
@@ -238,30 +236,17 @@ const AdminMenu: React.FC = () => {
                     setSelectedCategory(cat.category);
                     setIsAddingNew(false);
                   }}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    padding: "10px 12px",
-                    marginBottom: "8px",
-                    background:
-                      selectedCategory === cat.category ? "#3182ce" : "#f7fafc",
-                    color:
-                      selectedCategory === cat.category ? "white" : "#2d3748",
-                    border: "1px solid #e2e8f0",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    textAlign: "left",
-                    fontWeight: 500,
-                    transition: "all 0.2s",
-                  }}
+                  className={`admin-category-btn ${
+                    selectedCategory === cat.category ? "active" : ""
+                  }`}
                 >
                   {cat.category} ({cat.items.length})
                 </button>
               ))
             ) : (
-              <p style={{ color: "#718096", textAlign: "center" }}>
-                No categories found
-              </p>
+              <div className="admin-empty-state">
+                <p>No categories found</p>
+              </div>
             )}
           </div>
         </div>
@@ -272,17 +257,7 @@ const AdminMenu: React.FC = () => {
           {!isAddingNew && (
             <button
               onClick={() => setIsAddingNew(true)}
-              style={{
-                marginBottom: "20px",
-                padding: "10px 16px",
-                background: "#3182ce",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontWeight: 500,
-                fontSize: "0.95rem",
-              }}
+              className="admin-btn admin-btn-primary admin-add-item-btn"
             >
               + Add New Item
             </button>
@@ -294,31 +269,15 @@ const AdminMenu: React.FC = () => {
               <h3 className="admin-card-title">
                 {editingItem ? "Edit Item" : "Add New Item"}
               </h3>
-              <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: "16px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "6px",
-                      fontWeight: 500,
-                      color: "#2d3748",
-                    }}
-                  >
-                    Category *
-                  </label>
+              <form onSubmit={handleSubmit} className="admin-form">
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Category *</label>
                   <select
                     name="category"
                     value={formData.category}
                     onChange={handleInputChange}
                     required
-                    style={{
-                      width: "100%",
-                      padding: "8px 12px",
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "6px",
-                      fontSize: "0.95rem",
-                      boxSizing: "border-box",
-                    }}
+                    className="admin-form-select"
                   >
                     <option value="">Select Category</option>
                     {categories.map((cat) => (
@@ -331,15 +290,8 @@ const AdminMenu: React.FC = () => {
                 </div>
 
                 {formData.category === "Other" && (
-                  <div style={{ marginBottom: "16px" }}>
-                    <label
-                      style={{
-                        display: "block",
-                        marginBottom: "6px",
-                        fontWeight: 500,
-                        color: "#2d3748",
-                      }}
-                    >
+                  <div className="admin-form-group">
+                    <label className="admin-form-label">
                       New Category Name *
                     </label>
                     <input
@@ -349,29 +301,13 @@ const AdminMenu: React.FC = () => {
                       onChange={handleInputChange}
                       placeholder="e.g., Desserts"
                       required
-                      style={{
-                        width: "100%",
-                        padding: "8px 12px",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "6px",
-                        fontSize: "0.95rem",
-                        boxSizing: "border-box",
-                      }}
+                      className="admin-form-input"
                     />
                   </div>
                 )}
 
-                <div style={{ marginBottom: "16px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "6px",
-                      fontWeight: 500,
-                      color: "#2d3748",
-                    }}
-                  >
-                    Item Name *
-                  </label>
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Item Name *</label>
                   <input
                     type="text"
                     name="name"
@@ -379,28 +315,12 @@ const AdminMenu: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="e.g., Chicken Momo"
                     required
-                    style={{
-                      width: "100%",
-                      padding: "8px 12px",
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "6px",
-                      fontSize: "0.95rem",
-                      boxSizing: "border-box",
-                    }}
+                    className="admin-form-input"
                   />
                 </div>
 
-                <div style={{ marginBottom: "16px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "6px",
-                      fontWeight: 500,
-                      color: "#2d3748",
-                    }}
-                  >
-                    Description *
-                  </label>
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Description *</label>
                   <textarea
                     name="description"
                     value={formData.description}
@@ -408,35 +328,13 @@ const AdminMenu: React.FC = () => {
                     placeholder="e.g., Steamed dumplings with spiced chicken"
                     rows={3}
                     required
-                    style={{
-                      width: "100%",
-                      padding: "8px 12px",
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "6px",
-                      fontSize: "0.95rem",
-                      boxSizing: "border-box",
-                      fontFamily: "inherit",
-                    }}
+                    className="admin-form-textarea"
                   />
                 </div>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "12px",
-                    marginBottom: "16px",
-                  }}
-                >
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        marginBottom: "6px",
-                        fontWeight: 500,
-                        color: "#2d3748",
-                      }}
-                    >
+                <div className="admin-form-row">
+                  <div className="admin-form-group">
+                    <label className="admin-form-label">
                       Half Price (Optional)
                     </label>
                     <input
@@ -445,27 +343,11 @@ const AdminMenu: React.FC = () => {
                       value={formData.half_price}
                       onChange={handleInputChange}
                       placeholder="₹100"
-                      style={{
-                        width: "100%",
-                        padding: "8px 12px",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "6px",
-                        fontSize: "0.95rem",
-                        boxSizing: "border-box",
-                      }}
+                      className="admin-form-input"
                     />
                   </div>
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        marginBottom: "6px",
-                        fontWeight: 500,
-                        color: "#2d3748",
-                      }}
-                    >
-                      Full Price *
-                    </label>
+                  <div className="admin-form-group">
+                    <label className="admin-form-label">Full Price *</label>
                     <input
                       type="text"
                       name="full_price"
@@ -473,45 +355,19 @@ const AdminMenu: React.FC = () => {
                       onChange={handleInputChange}
                       placeholder="₹150"
                       required
-                      style={{
-                        width: "100%",
-                        padding: "8px 12px",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "6px",
-                        fontSize: "0.95rem",
-                        boxSizing: "border-box",
-                      }}
+                      className="admin-form-input"
                     />
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: "12px" }}>
-                  <button
-                    type="submit"
-                    style={{
-                      padding: "8px 16px",
-                      background: "#48bb78",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      fontWeight: 500,
-                    }}
-                  >
+                <div className="admin-btn-group">
+                  <button type="submit" className="admin-btn admin-btn-success">
                     {editingItem ? "Update Item" : "Create Item"}
                   </button>
                   <button
                     type="button"
                     onClick={handleCancel}
-                    style={{
-                      padding: "8px 16px",
-                      background: "#e2e8f0",
-                      color: "#2d3748",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      fontWeight: 500,
-                    }}
+                    className="admin-btn admin-btn-secondary"
                   >
                     Cancel
                   </button>
@@ -528,133 +384,40 @@ const AdminMenu: React.FC = () => {
                 items)
               </h3>
               {currentCategory.items.length === 0 ? (
-                <p
-                  style={{
-                    color: "#718096",
-                    textAlign: "center",
-                    padding: "20px",
-                  }}
-                >
-                  No items in this category
-                </p>
+                <div className="admin-empty-state">
+                  <p>No items in this category</p>
+                </div>
               ) : (
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                      "repeat(auto-fill, minmax(280px, 1fr))",
-                    gap: "16px",
-                  }}
-                >
+                <div className="admin-items-grid">
                   {currentCategory.items.map((item) => (
-                    <div
-                      key={item.id}
-                      style={{
-                        padding: "16px",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "6px",
-                        background: "#f7fafc",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "10px",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        <h4 style={{ margin: 0, color: "#2d3748", flex: 1 }}>
-                          {item.name}
-                        </h4>
-                        <span
-                          style={{
-                            fontSize: "0.8rem",
-                            color: "#4a5568",
-                            background: "#edf2f7",
-                            padding: "4px 8px",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          ID: {item.id}
-                        </span>
+                    <div key={item.id} className="admin-item-card">
+                      <div className="admin-item-header">
+                        <h4 className="admin-item-name">{item.name}</h4>
+                        <span className="admin-item-id">ID: {item.id}</span>
                       </div>
-                      <p
-                        style={{
-                          color: "#718096",
-                          margin: "8px 0",
-                          fontSize: "0.9rem",
-                        }}
-                      >
+                      <p className="admin-item-description">
                         {item.description}
                       </p>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "8px",
-                          marginBottom: "12px",
-                          flexWrap: "wrap",
-                        }}
-                      >
+                      <div className="admin-item-prices">
                         {item.half_price && (
-                          <span
-                            style={{
-                              display: "inline-block",
-                              padding: "4px 8px",
-                              background: "#bee3f8",
-                              color: "#2c5282",
-                              borderRadius: "4px",
-                              fontSize: "0.85rem",
-                              fontWeight: 500,
-                            }}
-                          >
+                          <span className="admin-price-tag admin-price-half">
                             Half: {item.half_price}
                           </span>
                         )}
-                        <span
-                          style={{
-                            display: "inline-block",
-                            padding: "4px 8px",
-                            background: "#c6f6d5",
-                            color: "#22543d",
-                            borderRadius: "4px",
-                            fontSize: "0.85rem",
-                            fontWeight: 500,
-                          }}
-                        >
+                        <span className="admin-price-tag admin-price-full">
                           Full: {item.full_price}
                         </span>
                       </div>
-                      <div style={{ display: "flex", gap: "8px" }}>
+                      <div className="admin-item-actions">
                         <button
                           onClick={() => handleEditItem(item)}
-                          style={{
-                            flex: 1,
-                            padding: "6px 12px",
-                            background: "#edf2f7",
-                            color: "#2d3748",
-                            border: "1px solid #cbd5e0",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            fontSize: "0.9rem",
-                            fontWeight: 500,
-                          }}
+                          className="admin-btn admin-btn-secondary"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDeleteItem(item.id, item.name)}
-                          style={{
-                            flex: 1,
-                            padding: "6px 12px",
-                            background: "#fed7d7",
-                            color: "#742a2a",
-                            border: "1px solid #fc8181",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            fontSize: "0.9rem",
-                            fontWeight: 500,
-                          }}
+                          className="admin-btn admin-btn-danger"
                         >
                           Delete
                         </button>

@@ -469,23 +469,111 @@
   font-size: 1.1rem;
 }
 
-/* Alert Messages */
-.admin-alert {
-  padding: 16px 20px;
+/* Menu Management Layout */
+.admin-menu-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+.admin-categories-sidebar {
+  /* Uses .admin-card */
+}
+
+.admin-category-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: #f7fafc;
+  color: #2d3748;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
-  margin-bottom: 20px;
+  cursor: pointer;
+  text-align: left;
   font-weight: 500;
-  border-left: 4px solid;
+  transition: all 0.2s;
 }
 
-.admin-alert-error {
-  background: #fef5f5;
-  color: #742a2a;
-  border-left-color: #e53e3e;
+.admin-category-btn:hover {
+  background: #edf2f7;
 }
 
-.admin-alert-success {
-  background: #f0fff4;
+.admin-category-btn.active {
+  background: #3182ce;
+  color: white;
+}
+
+.admin-add-item-btn {
+  margin-bottom: 20px;
+}
+
+.admin-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.admin-item-card {
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f7fafc;
+}
+
+.admin-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.admin-item-name {
+  margin: 0;
+  color: #2d3748;
+  flex: 1;
+}
+
+.admin-item-id {
+  font-size: 0.8rem;
+  color: #4a5568;
+  background: #edf2f7;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.admin-item-description {
+  color: #718096;
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+
+.admin-item-prices {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-price-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.admin-price-half {
+  background: #bee3f8;
+  color: #2c5282;
+}
+
+.admin-price-full {
+  background: #c6f6d5;
   color: #22543d;
-  border-left-color: #38a169;
+}
+
+.admin-item-actions {
+  display: flex;
+  gap: 8px;
 }
