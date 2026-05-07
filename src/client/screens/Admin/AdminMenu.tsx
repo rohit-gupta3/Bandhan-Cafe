@@ -17,6 +17,7 @@ interface MenuCategory {
 
 interface FormState {
   category: string;
+  newCategory: string;
   name: string;
   description: string;
   half_price: string;
@@ -34,6 +35,7 @@ const AdminMenu: React.FC = () => {
 
   const [formData, setFormData] = useState<FormState>({
     category: "",
+    newCategory: "",
     name: "",
     description: "",
     half_price: "",
@@ -88,8 +90,11 @@ const AdminMenu: React.FC = () => {
     setError("");
     setSuccess("");
 
+    const finalCategory =
+      formData.category === "Other" ? formData.newCategory : formData.category;
+
     if (
-      !formData.category ||
+      !finalCategory ||
       !formData.name ||
       !formData.description ||
       !formData.full_price
@@ -108,7 +113,7 @@ const AdminMenu: React.FC = () => {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          category: formData.category,
+          category: finalCategory,
           name: formData.name,
           description: formData.description,
           half_price: formData.half_price || null,
@@ -130,7 +135,8 @@ const AdminMenu: React.FC = () => {
       await fetchCategories();
 
       setFormData({
-        category: formData.category,
+        category: "",
+        newCategory: "",
         name: "",
         description: "",
         half_price: "",
@@ -148,6 +154,7 @@ const AdminMenu: React.FC = () => {
     setSelectedCategory(item.category);
     setFormData({
       category: item.category,
+      newCategory: "",
       name: item.name,
       description: item.description,
       half_price: item.half_price || "",
@@ -178,6 +185,8 @@ const AdminMenu: React.FC = () => {
   const handleCancel = () => {
     setFormData((prev) => ({
       ...prev,
+      category: "",
+      newCategory: "",
       name: "",
       description: "",
       half_price: "",
@@ -311,13 +320,46 @@ const AdminMenu: React.FC = () => {
                       boxSizing: "border-box",
                     }}
                   >
+                    <option value="">Select Category</option>
                     {categories.map((cat) => (
                       <option key={cat.category} value={cat.category}>
                         {cat.category}
                       </option>
                     ))}
+                    <option value="Other">Other (New Category)</option>
                   </select>
                 </div>
+
+                {formData.category === "Other" && (
+                  <div style={{ marginBottom: "16px" }}>
+                    <label
+                      style={{
+                        display: "block",
+                        marginBottom: "6px",
+                        fontWeight: 500,
+                        color: "#2d3748",
+                      }}
+                    >
+                      New Category Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="newCategory"
+                      value={formData.newCategory}
+                      onChange={handleInputChange}
+                      placeholder="e.g., Desserts"
+                      required
+                      style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "6px",
+                        fontSize: "0.95rem",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+                )}
 
                 <div style={{ marginBottom: "16px" }}>
                   <label
