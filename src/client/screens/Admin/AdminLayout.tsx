@@ -11,6 +11,7 @@ const AdminLayout: React.FC = () => {
     { path: PATHS.adminEmployees, label: "Employees" },
     { path: PATHS.adminSalary, label: "Salary" },
     { path: PATHS.adminCashflow, label: "Cashflow" },
+    { path: PATHS.adminMenu, label: "Menu" },
   ];
 
   return (

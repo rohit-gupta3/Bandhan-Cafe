@@ -11,6 +11,7 @@ import AdminDashboard from "./screens/Admin/AdminDashboard";
 import AdminEmployees from "./screens/Admin/AdminEmployees";
 import AdminSalary from "./screens/Admin/AdminSalary";
 import { AdminCashflow } from "./screens/Admin/AdminCashflow";
+import AdminMenu from "./screens/Admin/AdminMenu";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "cashflow", // /admin/cashflow
         element: <AdminCashflow />,
+      },
+      {
+        path: "menu", // /admin/menu
+        element: <AdminMenu />,
       },
     ],
     errorElement: <ErrorPage />,
