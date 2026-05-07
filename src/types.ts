@@ -12,3 +12,12 @@ export type CashflowItem = {
     date: string;
     paymentMethod: PaymentMethod;
 };
+
+export type MenuItem = {
+    id: number;
+    name: string;
+    category: string;
+    description: string;
+    full_price: number;
+    half_price: number | null;
+};

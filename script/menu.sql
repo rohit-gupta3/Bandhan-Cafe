@@ -7,7 +7,7 @@ CREATE TABLE Menu (
     half_price INTEGER
 );
 
-INSERT INTO menu (name, category, description, full_price, half_price)
+INSERT INTO Menu (name, category, description, full_price, half_price)
 VALUES
 ('Panner Pakoda', 'Veg Varieties', 'Crispy paneer fritters', 260, 140),
 ('Panner Chilli', 'Veg Varieties', 'Spicy paneer with bell peppers', 280, 160),
