@@ -2,6 +2,7 @@ import { Router } from "express";
 import { cashflowRoutes } from "./cashflow";
 import { employeeRoutes } from "./employee";
 import { salaryRoutes } from "./salary";
+import menuRouter from "./menu";
 import { cashflowService } from "../service/Cashflow";
 
 export const apiRouter = (): Router => {
@@ -32,6 +33,7 @@ export const apiRouter = (): Router => {
   router.use("/salaries", salaryRoutes());
   router.use("/cashflow", cashflowRoutes());
   router.use("/employees", employeeRoutes());
+  router.use("/menu", menuRouter);
 
   return router;
 };

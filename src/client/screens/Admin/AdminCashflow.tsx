@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CashflowItem } from "../../../types";
+import { Loader } from "../../components/Loader";
 
 export const AdminCashflow: React.FC = () => {
   const [cashflow, setCashflow] = useState<CashflowItem[]>([]);
@@ -21,7 +22,6 @@ export const AdminCashflow: React.FC = () => {
   });
 
   useEffect(() => {
-    // Fetch cashflow data from API
     fetch("/api/admin/cashflow")
       .then((response) => response.json())
       .then((data) => {
