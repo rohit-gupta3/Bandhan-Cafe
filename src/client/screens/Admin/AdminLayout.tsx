@@ -8,8 +8,6 @@ const AdminLayout: React.FC = () => {
 
   const adminLinks = [
     { path: PATHS.adminDashboard, label: "Dashboard" },
-    { path: PATHS.adminEmployees, label: "Employees" },
-    { path: PATHS.adminSalary, label: "Salary" },
     { path: PATHS.adminCashflow, label: "Cashflow" },
     { path: PATHS.adminMenu, label: "Menu" },
   ];
