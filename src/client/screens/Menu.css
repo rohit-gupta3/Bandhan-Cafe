@@ -157,6 +157,27 @@
   margin: 0;
 }
 
+.menu-error {
+  background: #fef5f5;
+  color: #742a2a;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #e53e3e;
+  margin: 20px;
+  text-align: center;
+}
+
+.menu-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.menu-empty p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .menu-header {
