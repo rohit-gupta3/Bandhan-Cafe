@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, memo } from "react";
 import {
   FEATURES,
   GALLERY_VIBES,
-  MENU_CATEGORIES,
   NAV_LINKS,
   POPULAR_ITEMS,
   ROOMS,
