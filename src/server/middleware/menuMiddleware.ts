@@ -20,8 +20,8 @@ export const createNewMenuItem = async (
       half_price: half_price ?? null,
       full_price,
     });
-    res.json({ success: true, item: data });
+    return res.json({ success: true, item: data });
   } catch (error) {
-    res.status(500).json({ error: "Failed to create menu item" });
+    return res.status(500).json({ error: "Failed to create menu item" });
   }
 };
