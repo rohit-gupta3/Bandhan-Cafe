@@ -1,87 +1,124 @@
-import React, { useState, memo } from "react";
-import { MENU_CATEGORIES } from "../contants";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { PATHS } from "../paths";
+import { Loader } from "../components/Loader";
 import "./Menu.css";
 
 interface MenuItem {
+  id: number;
+  category: string;
   name: string;
-  desc: string;
-  halfPrice?: string;
-  fullPrice: string;
-  emoji: string;
+  description: string;
+  half_price?: string | null;
+  full_price: string;
 }
 
 interface MenuCategory {
   category: string;
-  icon: string;
   items: MenuItem[];
 }
 
-interface MenuSectionProps {
-  menuTab: number;
-  setMenuTab: (tab: number) => void;
-}
+const Menu: React.FC = () => {
+  const [categories, setCategories] = useState<MenuCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-const MenuSection: React.FC<MenuSectionProps> = memo(
-  ({ menuTab, setMenuTab }) => (
-    <section id="Menu" className="menu-section">
-      <div className="menu-container">
-        <div className="section-header">
-          <h2 className="section-title">Our Complete Menu</h2>
-          <p className="section-subtitle">
-            Authentic Nepali and Indian cuisine
-          </p>
+  useEffect(() => {
+    fetchMenuItems();
+  }, []);
+
+  const fetchMenuItems = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/admin/menu");
+      if (!response.ok) throw new Error("Failed to fetch menu");
+      const data = await response.json();
+      setCategories(Array.isArray(data) ? data : []);
+      setError("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load menu");
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="menu-page">
+        <div className="menu-header">
+          <Link to={PATHS.home} className="back-button">
+            ← Back to Home
+          </Link>
+          <h1>Our Menu</h1>
         </div>
+        <Loader />
+      </div>
+    );
+  }
 
-        <div className="menu-tabs">
-          {MENU_CATEGORIES.map((category, index) => (
-            <button
-              key={category.category}
-              onClick={() => setMenuTab(index)}
-              className={`menu-tab ${menuTab === index ? "active" : ""}`}
-            >
-              <span className="tab-icon">{category.icon}</span>
-              <span className="tab-text">{category.category}</span>
-            </button>
-          ))}
+  if (error) {
+    return (
+      <div className="menu-page">
+        <div className="menu-header">
+          <Link to={PATHS.home} className="back-button">
+            ← Back to Home
+          </Link>
+          <h1>Our Menu</h1>
         </div>
-
-        <div className="menu-grid">
-          {MENU_CATEGORIES[menuTab]?.items.map((item, index) => (
-            <div key={index} className="menu-item">
-              <div className="menu-item-emoji">{item.emoji}</div>
-              <div className="menu-item-header">
-                <h3 className="menu-item-name">{item.name}</h3>
-                <div className="menu-item-prices">
-                  {item.halfPrice && (
-                    <span className="price-half">Half: {item.halfPrice}</span>
-                  )}
-                  <span
-                    className={`price-full ${!item.halfPrice ? "price-only" : ""}`}
-                  >
-                    {item.halfPrice ? "Full: " : ""}
-                    {item.fullPrice}
-                  </span>
-                </div>
-              </div>
-              <p className="menu-item-desc">{item.desc}</p>
-            </div>
-          ))}
+        <div className="menu-content">
+          <div className="menu-error">Error: {error}</div>
         </div>
       </div>
-    </section>
-  ),
-);
-
-const Menu: React.FC = () => {
-  const [menuTab, setMenuTab] = useState(0);
+    );
+  }
 
   return (
     <div className="menu-page">
-      <div className="menu-hero">
+      <div className="menu-header">
+        <Link to={PATHS.home} className="back-button">
+          ← Back to Home
+        </Link>
         <h1>Our Menu</h1>
         <p>Authentic Nepali & Indian Cuisine</p>
       </div>
-      <MenuSection menuTab={menuTab} setMenuTab={setMenuTab} />
+
+      <div className="menu-content">
+        {categories.length > 0 ? (
+          categories.map((category) => (
+            <div key={category.category} className="menu-category">
+              <h2 className="category-title">{category.category}</h2>
+              <div className="menu-grid">
+                {category.items.map((item) => (
+                  <div key={item.id} className="menu-item">
+                    <div className="menu-item-header">
+                      <h3 className="menu-item-name">{item.name}</h3>
+                      <div className="menu-item-prices">
+                        {item.half_price && (
+                          <span className="price-half">
+                            Half: {item.half_price}
+                          </span>
+                        )}
+                        <span
+                          className={`price-full ${!item.half_price ? "price-only" : ""}`}
+                        >
+                          {item.half_price ? "Full: " : ""}
+                          {item.full_price}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="menu-item-desc">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="menu-empty">
+            <p>No menu items available</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

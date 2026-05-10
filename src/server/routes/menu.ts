@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { menuService } from "../service/Menu";
 import { MenuItem } from "../../types";
+import { createNewMenuItem } from "../middleware/menuMiddleware";
 
 const menuRouter: Router = Router();
 let menuItemsStore: MenuItem[] = [];
@@ -43,26 +44,7 @@ menuRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-menuRouter.post("/items", async (req: Request, res: Response) => {
-  try {
-    const { category, name, description, half_price, full_price } = req.body;
-
-    if (!category || !name || !description || !full_price) {
-      return res.status(400).json({ error: "Missing required item fields" });
-    }
-
-    const { data } = await menuService.insertMenuEntry({
-      category,
-      name,
-      description,
-      half_price: half_price ?? null,
-      full_price,
-    });
-    res.json({ success: true, item: data });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to create menu item" });
-  }
-});
+menuRouter.post("/items",  [createNewMenuItem])
 
 // UPDATE menu item by ID
 menuRouter.put("/items/:itemId", async (req: Request, res: Response) => {
