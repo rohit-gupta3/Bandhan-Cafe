@@ -3,6 +3,7 @@ import path from "path";
 import cors from "cors";
 import helmet from "helmet";
 import { apiRouter } from "./routes/apiRouter";
+import { authRoutes } from "./routes/auth";
 
 export function createAndConfigureApp(): { app: express.Express } {
   const app = express();
@@ -12,6 +13,7 @@ export function createAndConfigureApp(): { app: express.Express } {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  app.use("/auth", authRoutes());
   app.use("/api/admin", apiRouter());
 
   const publicPath = path.join(process.cwd(), "public");

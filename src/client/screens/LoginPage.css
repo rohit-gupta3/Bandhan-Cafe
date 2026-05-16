@@ -91,6 +91,17 @@
   font-weight: 600;
 }
 
+.login-error {
+  margin: 0 0 16px;
+  color: #ffc3c3;
+  background: rgba(255, 72, 72, 0.14);
+  border: 1px solid rgba(255, 72, 72, 0.28);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
 .login-link:hover {
   text-decoration: underline;
 }
