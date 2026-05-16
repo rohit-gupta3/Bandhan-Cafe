@@ -10,97 +10,96 @@
 .menu-header {
   background: var(--gradient-primary);
   color: white;
-  padding: 20px;
+  padding: 16px 16px 14px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
   position: relative;
 }
 
 .back-button {
   position: absolute;
-  left: 20px;
-  top: 20px;
+  left: 14px;
+  top: 14px;
   color: white;
   text-decoration: none;
   font-weight: 500;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.15);
   transition: background 0.3s ease;
 }
 
 .back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .menu-header h1 {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin: 0 0 8px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  margin: 0 0 4px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.18);
 }
 
 .menu-header p {
-  font-size: 1rem;
-  opacity: 0.9;
+  font-size: 0.92rem;
+  opacity: 0.92;
   margin: 0;
 }
 
 .menu-content {
-  padding: 20px;
-  max-width: 1200px;
+  padding: 16px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .menu-category {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   cursor: pointer;
-  padding: 18px 20px;
-  border-radius: 16px;
-  background: rgba(200, 164, 78, 0.08);
-  border: 1px solid rgba(200, 164, 78, 0.15);
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(200, 164, 78, 0.07);
+  border: 1px solid rgba(200, 164, 78, 0.14);
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .category-header:hover {
-  background: rgba(200, 164, 78, 0.12);
-  transform: translateY(-1px);
+  background: rgba(200, 164, 78, 0.11);
 }
 
 .category-title {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
 }
 
 .category-summary {
-  margin: 6px 0 0;
+  margin: 4px 0 0;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
 .category-toggle {
   background: var(--accent-color);
   border: none;
   color: white;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .category-toggle:hover {
@@ -110,25 +109,25 @@
 /* Menu Grid */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
 }
 
 .menu-item {
   background: var(--secondary-bg);
   border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+  padding: 14px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
   border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
 }
 
 .menu-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   border-color: var(--border-hover);
 }
 
@@ -137,11 +136,11 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 8px;
-  gap: 12px;
+  gap: 10px;
 }
 
 .menu-item-name {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
@@ -160,8 +159,8 @@
 .price-half,
 .price-full {
   font-weight: 600;
-  font-size: 0.85rem;
-  padding: 3px 6px;
+  font-size: 0.82rem;
+  padding: 2px 5px;
   border-radius: 4px;
   white-space: nowrap;
 }
@@ -183,8 +182,8 @@
 
 .menu-item-desc {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.35;
   margin: 0;
 }
 
@@ -212,60 +211,70 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .menu-header {
-    padding: 16px 20px;
+    padding: 16px 16px 12px;
   }
 
   .back-button {
-    left: 16px;
-    top: 16px;
+    left: 14px;
+    top: 14px;
     padding: 6px 10px;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .menu-header h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .menu-header p {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .menu-content {
-    padding: 16px;
+    padding: 14px;
   }
 
   .menu-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .menu-item {
-    padding: 14px;
-  }
-
-  .menu-item-emoji {
-    font-size: 2rem;
+    padding: 12px;
   }
 
   .menu-item-name {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .menu-item-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
   }
 
   .menu-item-prices {
     align-items: flex-start;
     flex-direction: row;
-    gap: 12px;
+    gap: 10px;
+  }
+
+  .category-header {
+    padding: 12px 14px;
+    gap: 10px;
   }
 
   .category-title {
-    font-size: 1.3rem;
-    margin-bottom: 16px;
+    font-size: 1.2rem;
+  }
+
+  .category-summary {
+    font-size: 0.82rem;
+  }
+
+  .category-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
   }
 }
 
