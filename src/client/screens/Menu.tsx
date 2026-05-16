@@ -119,7 +119,10 @@ const Menu: React.FC = () => {
                     {category.items.map((item) => (
                       <div key={item.id} className="menu-item">
                         <div className="menu-item-header">
-                          <h3 className="menu-item-name">{item.name}</h3>
+                          <div className="menu-item-meta">
+                            <h3 className="menu-item-name">{item.name}</h3>
+                            <p className="menu-item-desc">{item.description}</p>
+                          </div>
                           <div className="menu-item-prices">
                             {item.half_price && (
                               <span className="price-half">
@@ -134,7 +137,6 @@ const Menu: React.FC = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="menu-item-desc">{item.description}</p>
                       </div>
                     ))}
                   </div>
