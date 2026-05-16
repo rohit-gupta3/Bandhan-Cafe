@@ -20,6 +20,8 @@ export const AdminCashflow: React.FC = () => {
     amount: 0,
     paymentMethod: "cash",
   });
+  const [filterYear, setFilterYear] = useState<string>("all");
+  const [filterMonth, setFilterMonth] = useState<string>("all");
 
   const fetchCashflow = async () => {
     try {
@@ -38,8 +40,30 @@ export const AdminCashflow: React.FC = () => {
     fetchCashflow();
   }, []);
 
-  const revenue = cashflow.filter((item) => item.type === "revenue");
-  const expenses = cashflow.filter((item) => item.type === "expense");
+  const availableYears = Array.from(
+    new Set(
+      cashflow
+        .map((item) => new Date(item.date).getFullYear().toString())
+        .concat(new Date().getFullYear().toString()),
+    ),
+  ).sort((a, b) => Number(b) - Number(a));
+
+  const filteredCashflow = cashflow.filter((item) => {
+    const date = new Date(item.date);
+    const year = date.getFullYear().toString();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+
+    if (filterYear !== "all" && year !== filterYear) {
+      return false;
+    }
+    if (filterMonth !== "all" && month !== filterMonth) {
+      return false;
+    }
+    return true;
+  });
+
+  const revenue = filteredCashflow.filter((item) => item.type === "revenue");
+  const expenses = filteredCashflow.filter((item) => item.type === "expense");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,10 +135,10 @@ export const AdminCashflow: React.FC = () => {
     });
   };
 
-  const totalRevenue = cashflow
+  const totalRevenue = filteredCashflow
     .filter((item) => item.type === "revenue")
     .reduce((sum, item) => sum + item.amount, 0);
-  const totalExpenses = cashflow
+  const totalExpenses = filteredCashflow
     .filter((item) => item.type === "expense")
     .reduce((sum, item) => sum + item.amount, 0);
   const netProfit = totalRevenue - totalExpenses;
@@ -347,7 +371,63 @@ export const AdminCashflow: React.FC = () => {
         <Loader />
       ) : (
         <div className="admin-card">
-          <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+          <div
+            className="admin-form-row"
+            style={{ gap: "20px", marginBottom: "20px", flexWrap: "wrap" }}
+          >
+            <div
+              className="admin-form-group"
+              style={{ flex: 1, minWidth: 180 }}
+            >
+              <label className="admin-form-label">Filter Year</label>
+              <select
+                className="admin-form-select"
+                value={filterYear}
+                onChange={(e) => setFilterYear(e.target.value)}
+              >
+                <option value="all">All Years</option>
+                {availableYears.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div
+              className="admin-form-group"
+              style={{ flex: 1, minWidth: 180 }}
+            >
+              <label className="admin-form-label">Filter Month</label>
+              <select
+                className="admin-form-select"
+                value={filterMonth}
+                onChange={(e) => setFilterMonth(e.target.value)}
+              >
+                <option value="all">All Months</option>
+                <option value="01">Jan</option>
+                <option value="02">Feb</option>
+                <option value="03">Mar</option>
+                <option value="04">Apr</option>
+                <option value="05">May</option>
+                <option value="06">Jun</option>
+                <option value="07">Jul</option>
+                <option value="08">Aug</option>
+                <option value="09">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: "20px",
+              flexWrap: "wrap",
+            }}
+          >
             <button
               className={`admin-btn ${activeTab === "overview" ? "admin-btn-primary" : "admin-btn-secondary"}`}
               onClick={() => setActiveTab("overview")}
