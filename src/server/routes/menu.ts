@@ -24,7 +24,7 @@ const sortMenu = (menuItems: MenuItem[]) => {
         a.name.localeCompare(b.name),
       ),
     }))
-    .sort((a, b) => a.category.localeCompare(b.category));
+    .sort((a, b) => b.category.localeCompare(a.category));
 };
 
 menuRouter.get("/", async (req: Request, res: Response) => {
@@ -44,7 +44,7 @@ menuRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-menuRouter.post("/items",  [createNewMenuItem])
+menuRouter.post("/items", [createNewMenuItem]);
 
 // UPDATE menu item by ID
 menuRouter.put("/items/:itemId", async (req: Request, res: Response) => {
