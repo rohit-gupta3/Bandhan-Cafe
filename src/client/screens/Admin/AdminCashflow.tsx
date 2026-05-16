@@ -222,6 +222,8 @@ export const AdminCashflow: React.FC = () => {
             <tr>
               <th>Date</th>
               <th>Category</th>
+              <th>Description</th>
+              <th>Payment Method</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -231,6 +233,8 @@ export const AdminCashflow: React.FC = () => {
               <tr key={item.id}>
                 <td>{new Date(item.date).toLocaleDateString()}</td>
                 <td>{item.category}</td>
+                <td>{item.description}</td>
+                <td>{item.paymentMethod}</td>
                 <td>₹{item.amount.toLocaleString()}</td>
                 <td>
                   <div className="admin-actions">
@@ -295,6 +299,7 @@ export const AdminCashflow: React.FC = () => {
               <th>Date</th>
               <th>Category</th>
               <th>Description</th>
+              <th>Payment Method</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -305,6 +310,7 @@ export const AdminCashflow: React.FC = () => {
                 <td>{new Date(item.date).toLocaleDateString()}</td>
                 <td>{item.category}</td>
                 <td>{item.description}</td>
+                <td>{item.paymentMethod}</td>
                 <td>₹{item.amount.toLocaleString()}</td>
                 <td>
                   <div className="admin-actions">
