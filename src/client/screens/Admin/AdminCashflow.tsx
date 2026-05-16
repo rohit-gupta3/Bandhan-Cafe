@@ -149,6 +149,14 @@ export const AdminCashflow: React.FC = () => {
             className="admin-btn admin-btn-success"
             onClick={() => {
               setModalType("revenue");
+              setFormData({
+                type: "revenue",
+                date: new Date().toISOString().split("T")[0],
+                category: "",
+                description: "",
+                amount: 0,
+                paymentMethod: "cash",
+              });
               setShowModal(true);
             }}
           >
@@ -158,6 +166,14 @@ export const AdminCashflow: React.FC = () => {
             className="admin-btn admin-btn-danger"
             onClick={() => {
               setModalType("expense");
+              setFormData({
+                type: "expense",
+                date: new Date().toISOString().split("T")[0],
+                category: "",
+                description: "",
+                amount: 0,
+                paymentMethod: "cash",
+              });
               setShowModal(true);
             }}
           >
@@ -185,6 +201,14 @@ export const AdminCashflow: React.FC = () => {
           className="admin-btn admin-btn-success"
           onClick={() => {
             setModalType("revenue");
+            setFormData({
+              type: "revenue",
+              date: new Date().toISOString().split("T")[0],
+              category: "",
+              description: "",
+              amount: 0,
+              paymentMethod: "cash",
+            });
             setShowModal(true);
           }}
         >
@@ -249,6 +273,14 @@ export const AdminCashflow: React.FC = () => {
           className="admin-btn admin-btn-danger"
           onClick={() => {
             setModalType("expense");
+            setFormData({
+              type: "expense",
+              date: new Date().toISOString().split("T")[0],
+              category: "",
+              description: "",
+              amount: 0,
+              paymentMethod: "cash",
+            });
             setShowModal(true);
           }}
         >
