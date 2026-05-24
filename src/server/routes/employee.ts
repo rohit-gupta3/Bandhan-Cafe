@@ -1,90 +1,137 @@
 import { Router } from "express";
 import { supabaseClient } from "../infra/supabase";
 
-export let employees = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@bandhancafe.com",
-    phone: "+1-555-0123",
-    role: "Manager",
-    salary: 45000,
-    hireDate: "2023-01-15",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@bandhancafe.com",
-    phone: "+1-555-0124",
-    role: "Barista",
-    salary: 32000,
-    hireDate: "2023-03-20",
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Mike Johnson",
-    email: "mike@bandhancafe.com",
-    phone: "+1-555-0125",
-    role: "Waiter",
-    salary: 28000,
-    hireDate: "2023-05-10",
-    status: "active",
-  },
-];
-
+const EMPLOYEES_TABLE = "Employees";
 export const employeeRoutes = (): Router => {
   const app = Router();
 
-  app.get("/", async (req, res) => {
+  // GET / - list employees
+  app.get("/", async (_req, res) => {
     try {
-      const { data, error } = await supabaseClient.from("Employee").select("*");
-
+      const { data, error } = await supabaseClient.from(EMPLOYEES_TABLE).select("*");
       if (error) {
-        console.error("Supabase error:", error);
-        return res.json({ employees });
+        console.error("Supabase error (GET /employees):", error);
+        return res
+          .status(502)
+          .json({ success: false, error: "Failed to fetch employees" });
       }
 
-      if (data && data.length > 0) {
-        return res.json({ employees: data });
-      }
-
-      res.json({ employees });
+      return res.json({ success: true, data: data ?? [] });
     } catch (err) {
       console.error("Error fetching employees:", err);
-      res.json({ employees });
+      return res
+        .status(500)
+        .json({ success: false, error: "Internal server error" });
     }
   });
 
-  app.post("/", (req, res) => {
-    const newEmployee = {
-      id: employees.length + 1,
-      ...req.body,
-      status: "active",
-    };
-    employees.push(newEmployee);
-    res.json({ employee: newEmployee });
+  // POST / - create employee
+  app.post("/", async (req, res) => {
+    try {
+      const payload = { ...req.body, status: req.body.status ?? "active" };
+      const { data, error } = await supabaseClient
+        .from(EMPLOYEES_TABLE)
+        .insert(payload)
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Supabase error (POST /employees):", error);
+        return res
+          .status(502)
+          .json({ success: false, error: "Failed to create employee" });
+      }
+
+      return res.status(201).json({ success: true, data });
+    } catch (err) {
+      console.error("Error creating employee:", err);
+      return res
+        .status(500)
+        .json({ success: false, error: "Internal server error" });
+    }
   });
 
-  app.put("/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    const employeeIndex = employees.findIndex((emp) => emp.id === id);
-    if (employeeIndex === -1) {
-      return res.status(404).json({ error: "Employee not found" });
+  // PUT /:id - update employee
+  app.put("/:id", async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ success: false, error: "Invalid id" });
     }
-    employees[employeeIndex] = { ...employees[employeeIndex], ...req.body };
-    res.json({ employee: employees[employeeIndex] });
+
+    try {
+      const { data: existing, error: fetchErr } = await supabaseClient
+        .from(EMPLOYEES_TABLE)
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (fetchErr || !existing) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Employee not found" });
+      }
+
+      const { data, error } = await supabaseClient
+        .from(EMPLOYEES_TABLE)
+        .update(req.body)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Supabase error (PUT /employees/:id):", error);
+        return res
+          .status(502)
+          .json({ success: false, error: "Failed to update employee" });
+      }
+
+      return res.json({ success: true, data });
+    } catch (err) {
+      console.error("Error updating employee:", err);
+      return res
+        .status(500)
+        .json({ success: false, error: "Internal server error" });
+    }
   });
 
-  app.delete("/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    const employeeIndex = employees.findIndex((emp) => emp.id === id);
-    if (employeeIndex === -1) {
-      return res.status(404).json({ error: "Employee not found" });
+  // DELETE /:id - remove employee
+  app.delete("/:id", async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ success: false, error: "Invalid id" });
     }
-    employees.splice(employeeIndex, 1);
-    res.json({ message: "Employee deleted successfully" });
+
+    try {
+      const { data: existing, error: fetchErr } = await supabaseClient
+        .from(EMPLOYEES_TABLE)
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (fetchErr || !existing) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Employee not found" });
+      }
+
+      const { error } = await supabaseClient
+        .from(EMPLOYEES_TABLE)
+        .delete()
+        .eq("id", id);
+      if (error) {
+        console.error("Supabase error (DELETE /employees/:id):", error);
+        return res
+          .status(502)
+          .json({ success: false, error: "Failed to delete employee" });
+      }
+
+      return res.json({ success: true, message: "Employee deleted" });
+    } catch (err) {
+      console.error("Error deleting employee:", err);
+      return res
+        .status(500)
+        .json({ success: false, error: "Internal server error" });
+    }
   });
 
   return app;

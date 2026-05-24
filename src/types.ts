@@ -1,23 +1,36 @@
 export enum PaymentMethod {
-    Cash = "cash",
-    Online = "online",
+  Cash = "cash",
+  Online = "online",
 }
 
 export type CashflowItem = {
-    id: number;
-    type: "revenue" | "expense";
-    category: string;
-    amount: number;
-    description: string;
-    date: string;
-    paymentMethod: PaymentMethod;
+  id: number;
+  type: "revenue" | "expense";
+  category: string;
+  amount: number;
+  description: string;
+  date: string;
+  paymentMethod: PaymentMethod;
 };
 
 export type MenuItem = {
-    id: number;
-    name: string;
-    category: string;
-    description: string;
-    full_price: number;
-    half_price: number | null;
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  full_price: number;
+  half_price: number | null;
+};
+
+export type Employee = {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  salary: number;
+  hire_date: string | Date;
+  status: "active" | "inactive";
+  address?: string;
+  emergency_contact?: string;
 };

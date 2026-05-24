@@ -1,0 +1,12 @@
+CREATE TABLE Employees (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  phone VARCHAR(30),
+  role VARCHAR(50) NOT NULL,
+  salary NUMERIC(12, 2) NOT NULL,
+  hire_date DATE NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  address TEXT,
+  emergency_contact TEXT
+);

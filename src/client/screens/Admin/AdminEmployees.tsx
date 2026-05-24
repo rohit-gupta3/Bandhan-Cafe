@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { EmployeeTableLayout } from "../../components/Table";
-
-interface Employee {
-  id: number;
-  name: string;
-  phone: string;
-  role: string;
-  salary: number;
-  hireDate: string;
-  status: string;
-  address?: string;
-  emergencyContact?: string;
-}
+import { Employee } from "../../../types";
 
 const AdminEmployees: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -19,24 +8,33 @@ const AdminEmployees: React.FC = () => {
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phone: "",
     role: "",
-    hireDate: "",
+    hire_date: "",
     salary: 0,
     status: "active",
     address: "",
-    emergencyContact: "",
+    emergency_contact: "",
   });
 
   useEffect(() => {
-    fetch("/api/admin/employees")
-      .then((response) => response.json())
-      .then((data) => {
-        setEmployees(data.employees);
-      })
-      .catch((error) => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await fetch("/api/admin/employees");
+        const body = await response.json();
+        if (body && body.success && Array.isArray(body.data)) {
+          setEmployees(body.data);
+        } else {
+          console.error("Failed to load employees:", body?.error || body);
+          setEmployees([]);
+        }
+      } catch (error) {
         console.error("Error fetching employees:", error);
-      });
+      }
+    };
+
+    fetchEmployees();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,33 +43,49 @@ const AdminEmployees: React.FC = () => {
     try {
       if (editingEmployee) {
         // Update existing employee
-        const response = await fetch(
-          `/api/admin/employees/${editingEmployee.id}`,
-          {
-            method: "PUT",
+        try {
+          const response = await fetch(
+            `/api/admin/employees/${editingEmployee.id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            },
+          );
+          const body = await response.json();
+          if (body && body.success) {
+            setEmployees(
+              employees.map((emp) =>
+                emp.id === editingEmployee.id ? body.data : emp,
+              ),
+            );
+          } else {
+            console.error("Failed to update employee:", body?.error || body);
+          }
+        } catch (error) {
+          console.error("Error updating employee:", error);
+        }
+      } else {
+        // Create new employee
+        try {
+          const response = await fetch("/api/admin/employees", {
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(formData),
-          },
-        );
-        const data = await response.json();
-        setEmployees(
-          employees.map((emp) =>
-            emp.id === editingEmployee.id ? data.employee : emp,
-          ),
-        );
-      } else {
-        // Create new employee
-        const response = await fetch("/api/admin/employees", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await response.json();
-        setEmployees([...employees, data.employee]);
+          });
+          const body = await response.json();
+          if (body && body.success) {
+            setEmployees([...employees, body.data]);
+          } else {
+            console.error("Failed to create employee:", body?.error || body);
+          }
+        } catch (error) {
+          console.error("Error creating employee:", error);
+        }
       }
       handleCloseModal();
     } catch (error) {
@@ -83,13 +97,17 @@ const AdminEmployees: React.FC = () => {
     setEditingEmployee(employee);
     setFormData({
       name: employee.name,
+      email: (employee as any).email || "",
       phone: employee.phone,
       role: employee.role,
-      hireDate: employee.hireDate,
+      hire_date:
+        typeof (employee as any).hire_date === "string"
+          ? (employee as any).hire_date.split("T")[0]
+          : new Date((employee as any).hire_date).toISOString().split("T")[0],
       salary: employee.salary,
       status: employee.status,
       address: employee.address || "",
-      emergencyContact: employee.emergencyContact || "",
+      emergency_contact: employee.emergency_contact || "",
     });
     setShowModal(true);
   };
@@ -97,10 +115,15 @@ const AdminEmployees: React.FC = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
-        await fetch(`/api/admin/employees/${id}`, {
+        const response = await fetch(`/api/admin/employees/${id}`, {
           method: "DELETE",
         });
-        setEmployees(employees.filter((emp) => emp.id !== id));
+        const body = await response.json();
+        if (body && body.success) {
+          setEmployees(employees.filter((emp) => emp.id !== id));
+        } else {
+          console.error("Failed to delete employee:", body?.error || body);
+        }
       } catch (error) {
         console.error("Error deleting employee:", error);
       }
@@ -112,13 +135,14 @@ const AdminEmployees: React.FC = () => {
     setEditingEmployee(null);
     setFormData({
       name: "",
+      email: "",
       phone: "",
       role: "",
-      hireDate: "",
+      hire_date: "",
       salary: 0,
       status: "active",
       address: "",
-      emergencyContact: "",
+      emergency_contact: "",
     });
   };
 
@@ -204,6 +228,18 @@ const AdminEmployees: React.FC = () => {
 
                 <div className="admin-form-row">
                   <div className="admin-form-group">
+                    <label className="admin-form-label">Email</label>
+                    <input
+                      type="email"
+                      className="admin-form-input"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                  <div className="admin-form-group">
                     <label className="admin-form-label">Phone</label>
                     <input
                       type="tel"
@@ -256,9 +292,9 @@ const AdminEmployees: React.FC = () => {
                     <input
                       type="date"
                       className="admin-form-input"
-                      value={formData.hireDate}
+                      value={formData.hire_date}
                       onChange={(e) =>
-                        setFormData({ ...formData, hireDate: e.target.value })
+                        setFormData({ ...formData, hire_date: e.target.value })
                       }
                       required
                     />
@@ -297,11 +333,11 @@ const AdminEmployees: React.FC = () => {
                   <input
                     type="text"
                     className="admin-form-input"
-                    value={formData.emergencyContact}
+                    value={formData.emergency_contact}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        emergencyContact: e.target.value,
+                        emergency_contact: e.target.value,
                       })
                     }
                     placeholder="Name and phone number"
