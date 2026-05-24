@@ -12,7 +12,15 @@ export const cashflowRoutes = (): Router => {
         return res.json({ error });
       }
 
-      res.json({ cashflow: data });
+      const entries = Array.isArray(data) ? data : [];
+      // sort by date descending (newest first)
+      entries.sort((a: any, b: any) => {
+        const da = new Date(a.date).getTime();
+        const db = new Date(b.date).getTime();
+        return db - da;
+      });
+
+      res.json({ cashflow: entries });
     } catch (err) {
       console.error("Error fetching cashflow:", err);
       res.json({ error: err });
