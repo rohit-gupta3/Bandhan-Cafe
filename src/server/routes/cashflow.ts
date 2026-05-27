@@ -1,5 +1,6 @@
 import express, { type Router } from "express";
 import { cashflowService } from "../service/Cashflow";
+import { adminKeyService } from "../service/AdminKey";
 
 export const cashflowRoutes = (): Router => {
   const app = express.Router();
@@ -29,14 +30,24 @@ export const cashflowRoutes = (): Router => {
 
   app.post("/", async (req, res) => {
     try {
-      const { data, error } = await cashflowService.insertCashFlowEntry(
-        req.body,
-      );
+      console.log("Received cashflow entry:", req.body);
+      const { pin, ...entry } = req.body as any;
+      if (!pin) {
+        return res.status(400).json({ error: "pin required" });
+      }
+
+      const { valid, error: keyErr } = await adminKeyService.verifyPin(pin);
+      if (keyErr || !valid) {
+        console.error("AdminKey verification failed:", keyErr);
+        return res.status(401).json({ error: "Invalid admin pin" });
+      }
+
+      const { data, error } = await cashflowService.insertCashFlowEntry(entry);
       if (error) {
         console.error("Supabase error:", error);
-        return res.json({ error });
+        return res.status(502).json({ error: "Failed to insert entry" });
       }
-      res.json({ entry: data });
+      res.status(201).json({ entry: data });
     } catch (err) {
       console.error("Error inserting cashflow entry:", err);
       res.json({ error: err });
@@ -46,13 +57,24 @@ export const cashflowRoutes = (): Router => {
   app.put("/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      const { pin, ...updated } = req.body as any;
+      if (!pin) {
+        return res.status(400).json({ error: "pin required" });
+      }
+
+      const { valid, error: keyErr } = await adminKeyService.verifyPin(+pin);
+      if (keyErr || !valid) {
+        console.error("AdminKey verification failed:", keyErr);
+        return res.status(401).json({ error: "Invalid admin pin" });
+      }
+
       const { data, error } = await cashflowService.updateCashFlowEntry(
         id,
-        req.body,
+        updated,
       );
       if (error) {
         console.error("Supabase error:", error);
-        return res.json({ error });
+        return res.status(502).json({ error: "Failed to update entry" });
       }
       res.json({ entry: data });
     } catch (err) {
@@ -64,10 +86,21 @@ export const cashflowRoutes = (): Router => {
   app.delete("/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      const { pin } = req.body as any;
+      if (!pin) {
+        return res.status(400).json({ error: "pin required" });
+      }
+
+      const { valid, error: keyErr } = await adminKeyService.verifyPin(pin);
+      if (keyErr || !valid) {
+        console.error("AdminKey verification failed:", keyErr);
+        return res.status(401).json({ error: "Invalid admin pin" });
+      }
+
       const { error } = await cashflowService.deleteCashFlowEntry(id);
       if (error) {
         console.error("Supabase error:", error);
-        return res.json({ error });
+        return res.status(502).json({ error: "Failed to delete entry" });
       }
       res.json({ message: "Cashflow entry deleted successfully" });
     } catch (err) {
