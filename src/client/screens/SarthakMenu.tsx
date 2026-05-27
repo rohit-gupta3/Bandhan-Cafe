@@ -37,6 +37,16 @@ const SarthakMenu: React.FC = () => {
     }));
   };
 
+  const normalizePrice = (value: string | number | undefined | null) => {
+    const numeric = Number(value) || 0;
+    const afterTax = numeric * 1.2;
+    return Math.ceil(afterTax / 5) * 5;
+  };
+
+  const fmtPrice = (value: string | number | undefined | null) => {
+    return `Rs. ${normalizePrice(value)}`;
+  };
+
   const fetchMenuItems = async () => {
     try {
       setLoading(true);
@@ -80,7 +90,7 @@ const SarthakMenu: React.FC = () => {
   return (
     <div className="menu-page">
       <div className="menu-header">
-        <h1>Sarthak Cafe</h1>
+        <h1>Sarthak Hotel</h1>
         <p>Authentic Nepali & Indian Cuisine</p>
       </div>
 
@@ -115,16 +125,18 @@ const SarthakMenu: React.FC = () => {
                             <p className="menu-item-desc">{item.description}</p>
                           </div>
                           <div className="menu-item-prices">
-                            {item.half_price && (
+                            {item.half_price ? (
                               <span className="price-half">
-                                Half: {item.half_price}
+                                Half: {fmtPrice(item.half_price)}
                               </span>
+                            ) : (
+                              <span className="price-half price-empty"></span>
                             )}
                             <span
                               className={`price-full ${!item.half_price ? "price-only" : ""}`}
                             >
                               {item.half_price ? "Full: " : ""}
-                              {item.full_price}
+                              {fmtPrice(item.full_price)}
                             </span>
                           </div>
                         </div>
