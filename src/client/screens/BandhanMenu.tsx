@@ -14,14 +14,8 @@ interface MenuCategory {
   items: MenuItem[];
 }
 
-const normalizePrice = (value: string | number | undefined | null) => {
-  const numeric = Number(value) || 0;
-  const afterTax = numeric * 1.2;
-  return Math.ceil(afterTax / 5) * 5;
-};
-
 const fmt = (n: string | number | undefined | null) =>
-  `Rs. ${normalizePrice(n)}`;
+  `Rs. ${n}`;
 
 export const BandhanMenu: React.FC = () => {
   const [categories, setCategories] = useState<MenuCategory[]>([]);
@@ -257,10 +251,10 @@ export const BandhanMenu: React.FC = () => {
                   <div className="cat-rule" />
                 </div>
                 {(section.items || []).map((item) => {
-                  const fullPrice = normalizePrice(item.full_price);
+                  const fullPrice = item.full_price;
                   const halfPrice =
                     item.half_price != null
-                      ? normalizePrice(item.half_price)
+                      ? item.half_price
                       : null;
                   const halfPart =
                     halfPrice != null ? (
