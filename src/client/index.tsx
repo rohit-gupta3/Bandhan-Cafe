@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CafeHomepage } from "./screens/Home";
 import { LoginPage } from "./screens/LoginPage";
 import { ErrorPage } from "./screens/ErrorPage";
-import Menu from "./screens/Menu";
 import AdminLayout from "./screens/Admin/AdminLayout";
 import AdminDashboard from "./screens/Admin/AdminDashboard";
 import AdminEmployees from "./screens/Admin/AdminEmployees";
@@ -13,6 +12,7 @@ import AdminSalary from "./screens/Admin/AdminSalary";
 import { AdminCashflow } from "./screens/Admin/AdminCashflow";
 import AdminMenu from "./screens/Admin/AdminMenu";
 import SarthakMenu from "./screens/SarthakMenu";
+import { BandhanMenu } from "./screens/BandhanMenu";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: PATHS.menu,
-    element: <Menu />,
+    element: <BandhanMenu />,
     errorElement: <ErrorPage />,
   },
   {
