@@ -12,6 +12,7 @@ import AdminEmployees from "./screens/Admin/AdminEmployees";
 import AdminSalary from "./screens/Admin/AdminSalary";
 import { AdminCashflow } from "./screens/Admin/AdminCashflow";
 import AdminMenu from "./screens/Admin/AdminMenu";
+import SarthakMenu from "./screens/SarthakMenu";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
   {
     path: PATHS.menu,
     element: <Menu />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PATHS.SarthakMenu,
+    element: <SarthakMenu />,
     errorElement: <ErrorPage />,
   },
   {

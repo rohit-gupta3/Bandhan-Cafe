@@ -1,6 +1,8 @@
+
 export const PATHS = {
   home: "/",
   menu: "/menu",
+  SarthakMenu: "/sarthak-cafe-menu",
   contact: "/contact",
   login: "/login",
   adminDashboard: "/admin",
