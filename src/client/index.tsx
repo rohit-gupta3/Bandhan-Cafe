@@ -31,6 +31,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: PATHS.SarthakMenu,
+    element: <SarthakMenu />,
+    errorElement: <ErrorPage />,
+  },
+  {
     path: PATHS.login,
     element: <LoginPage />,
     errorElement: <ErrorPage />,
