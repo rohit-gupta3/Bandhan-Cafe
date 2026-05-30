@@ -12,10 +12,13 @@ export const AdminCashflow: React.FC = () => {
   const [editingItem, setEditingItem] = useState<CashflowItem | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const getDefaultCategory = (type: "revenue" | "expense") =>
+    type === "revenue" ? "Food" : "Ingredients";
+
   const [formData, setFormData] = useState({
     type: "revenue" as "revenue" | "expense",
     date: new Date().toISOString().split("T")[0],
-    category: "",
+    category: getDefaultCategory("revenue"),
     description: "",
     amount: 0,
     paymentMethod: "cash",
@@ -128,7 +131,7 @@ export const AdminCashflow: React.FC = () => {
     setFormData({
       type: "revenue",
       date: new Date().toISOString().split("T")[0],
-      category: "",
+      category: getDefaultCategory("revenue"),
       description: "",
       amount: 0,
       paymentMethod: "cash",
@@ -176,7 +179,7 @@ export const AdminCashflow: React.FC = () => {
               setFormData({
                 type: "revenue",
                 date: new Date().toISOString().split("T")[0],
-                category: "",
+                category: getDefaultCategory("revenue"),
                 description: "",
                 amount: 0,
                 paymentMethod: "cash",
@@ -193,7 +196,7 @@ export const AdminCashflow: React.FC = () => {
               setFormData({
                 type: "expense",
                 date: new Date().toISOString().split("T")[0],
-                category: "",
+                category: getDefaultCategory("expense"),
                 description: "",
                 amount: 0,
                 paymentMethod: "cash",
@@ -228,7 +231,7 @@ export const AdminCashflow: React.FC = () => {
             setFormData({
               type: "revenue",
               date: new Date().toISOString().split("T")[0],
-              category: "",
+              category: getDefaultCategory("revenue"),
               description: "",
               amount: 0,
               paymentMethod: "cash",
@@ -304,7 +307,7 @@ export const AdminCashflow: React.FC = () => {
             setFormData({
               type: "expense",
               date: new Date().toISOString().split("T")[0],
-              category: "",
+              category: getDefaultCategory("expense"),
               description: "",
               amount: 0,
               paymentMethod: "cash",
@@ -484,15 +487,15 @@ export const AdminCashflow: React.FC = () => {
                 </div>
 
                 <div className="admin-form-group">
-                  <label className="admin-form-label">Category</label>
+                  <label className="admin-form-label">Category *</label>
                   <select
                     className="admin-form-select"
                     value={formData.category}
                     onChange={(e) =>
                       setFormData({ ...formData, category: e.target.value })
                     }
+                    required
                   >
-                    <option value="">Select Category</option>
                     {modalType === "revenue" ? (
                       <>
                         <option value="Food">Food</option>
@@ -557,7 +560,7 @@ export const AdminCashflow: React.FC = () => {
                       }
                     >
                       <option value="cash">Cash</option>
-                      <option value="online">Online</option>
+                      {/* <option value="online">Online</option> */}
                     </select>
                   </div>
                 </div>
