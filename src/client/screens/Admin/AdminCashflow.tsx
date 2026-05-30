@@ -508,6 +508,8 @@ export const AdminCashflow: React.FC = () => {
                         <option value="Maintenance">Maintenance</option>
                         <option value="Beverages">Beverage</option>
                         <option value="Room">Room</option>
+                        <option value="Hookah">Hookah</option>
+                        <option value="Cigarettes">Cigarettes</option>
                         <option value="payout_to_owner">To Owner</option>
                       </>
                     )}
