@@ -502,6 +502,7 @@ export const AdminCashflow: React.FC = () => {
                         <option value="Beverages">Beverages</option>
                         <option value="Hookah">Hookah</option>
                         <option value="Room">Room</option>
+                        <option value="Sarthak">Sarthak</option>
                       </>
                     ) : (
                       <>
