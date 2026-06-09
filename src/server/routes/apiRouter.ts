@@ -4,6 +4,7 @@ import { employeeRoutes } from "./employee";
 import { salaryRoutes } from "./salary";
 import menuRouter from "./menu";
 import { cashflowService } from "../service/Cashflow";
+import { DashboardStats } from "../../types";
 
 export const apiRouter = (): Router => {
   const router = Router();
@@ -16,18 +17,35 @@ export const apiRouter = (): Router => {
         totalExpenses: 0,
       });
     }
-    const totalRevenue = cashflow
-      .filter((item) => item.type === "revenue")
-      .reduce((sum, item) => sum + item.amount, 0);
-
-    const totalExpenses = cashflow
-      .filter((item) => item.type === "expense")
-      .reduce((sum, item) => sum + item.amount, 0);
-
+    let totalRevenue = 0;
+    let totalExpenses = 0;
+    let totalBeverageExpenses = 0;
+    let totalPayout = 0;
+    let totalRoomRevenue = 0;
+    for (const item of cashflow) {
+      if (item.type === "revenue") {
+        if(item.category === "Room"){
+          totalRoomRevenue += item.amount;
+        }
+        totalRevenue += item.amount;
+      } else if (item.type === "expense") {
+        totalExpenses += item.amount;
+        if (item.category === "Beverages") {
+          totalBeverageExpenses += item.amount;
+        }
+        if(item.category === "payout_to_owner"){
+          totalPayout += item.amount;
+        }
+      }
+    }
+    
     res.json({
       totalRevenue,
       totalExpenses,
-    });
+      totalBeverageExpenses,
+      totalPayout,
+      totalRoomRevenue
+    } as DashboardStats);
   });
 
   router.use("/salaries", salaryRoutes());

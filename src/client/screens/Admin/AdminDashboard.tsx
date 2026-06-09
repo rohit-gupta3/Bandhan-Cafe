@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "../../components/Loader";
+import { DashboardStats } from "../../../types";
 
 const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState({
-    totalEmployees: 0,
-    activeEmployees: 0,
     totalSalary: 0,
     totalRevenue: 0,
     totalExpenses: 0,
-    netProfit: 0,
+    totalBeverageExpenses: 0,
+    totalPayout: 0,
+    totalRoomRevenue: 0,
   });
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/admin/dashboard/stats")
-      .then((response) => response.json())
+      .then((response) => response.json() as Promise<DashboardStats>)
       .then((data) => {
         setStats({
-          totalEmployees: data.totalEmployees || 0,
-          activeEmployees: data.activeEmployees || 0,
           totalSalary: 0,
           totalRevenue: data.totalRevenue || 0,
           totalExpenses: data.totalExpenses || 0,
-          netProfit: data.netProfit || 0,
+          totalBeverageExpenses: data.totalBeverageExpenses || 0,
+          totalPayout: data.totalPayout || 0,
+          totalRoomRevenue: data.totalRoomRevenue || 0,
         });
         setLoading(false);
       })
@@ -56,6 +57,25 @@ const AdminDashboard: React.FC = () => {
                 ₹{(stats.totalExpenses || 0).toLocaleString()}
               </div>
               <p className="admin-stat-label">Total Expenses</p>
+            </div>
+            <div className="admin-stat-card">
+              <div className="admin-stat-value">
+                ₹{(stats.totalBeverageExpenses || 0).toLocaleString()}
+              </div>
+              <p className="admin-stat-label">Beverage Expenses</p>
+            </div>
+
+            <div className="admin-stat-card">
+              <div className="admin-stat-value">
+                ₹{(stats.totalRoomRevenue || 0).toLocaleString()}
+              </div>
+              <p className="admin-stat-label">Room Revenue</p>
+            </div>
+            <div className="admin-stat-card">
+              <div className="admin-stat-value">
+                ₹{(stats.totalPayout || 0).toLocaleString()}
+              </div>
+              <p className="admin-stat-label">Total Payout</p>
             </div>
           </div>
         </>

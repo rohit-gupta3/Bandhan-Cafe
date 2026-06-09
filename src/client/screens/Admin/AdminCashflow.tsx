@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CashflowItem } from "../../../types";
 import { Loader } from "../../components/Loader";
+import { ExpenseCategory, RevenueCategory } from "../../../contants";
 
 export const AdminCashflow: React.FC = () => {
   const [cashflow, setCashflow] = useState<CashflowItem[]>([]);
@@ -498,23 +499,22 @@ export const AdminCashflow: React.FC = () => {
                   >
                     {modalType === "revenue" ? (
                       <>
-                        <option value="Food">Food</option>
-                        <option value="Beverages">Beverages</option>
-                        <option value="Hookah">Hookah</option>
-                        <option value="Room">Room</option>
-                        <option value="Sarthak">Sarthak</option>
+                        <option value={RevenueCategory.Food}>Food</option>
+                        <option value={RevenueCategory.Beverages}>Beverages</option>
+                        <option value={RevenueCategory.Hookah}>Hookah</option>
+                        <option value={RevenueCategory.Room}>Room</option>
+                        <option value={RevenueCategory.Sarthak}>Sarthak</option>
                       </>
                     ) : (
                       <>
-                        <option value="Ingredients">Ingredients</option>
-                        <option value="Utilities">Utilities</option>
-                        <option value="Staff">Staff</option>
-                        <option value="Maintenance">Maintenance</option>
-                        <option value="Beverages">Beverage</option>
-                        <option value="Room">Room</option>
-                        <option value="Hookah">Hookah</option>
-                        <option value="Cigarettes">Cigarettes</option>
-                        <option value="payout_to_owner">To Owner</option>
+                        <option value={ExpenseCategory.Ingredients}>Ingredients</option>
+                        <option value={ExpenseCategory.Utilities}>Utilities</option>
+                        <option value={ExpenseCategory.Staff}>Staff</option>
+                        <option value={ExpenseCategory.Maintenance}>Maintenance</option>
+                        <option value={ExpenseCategory.Beverage}>Beverage</option>
+                        <option value={ExpenseCategory.Hookah}>Hookah</option>
+                        <option value={ExpenseCategory.Cigarettes}>Cigarettes</option>
+                        <option value={ExpenseCategory.PayoutToOwner}>To Owner</option>
                       </>
                     )}
                   </select>

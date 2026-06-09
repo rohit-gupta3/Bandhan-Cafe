@@ -34,3 +34,12 @@ export type Employee = {
   address?: string;
   emergency_contact?: string;
 };
+
+export type DashboardStats = {
+  totalRevenue: number;
+  totalExpenses: number;
+  totalBeverageExpenses: number;
+  totalPayout: number;
+  totalRoomRevenue: number;
+  netProfit: number;
+};
