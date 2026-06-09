@@ -17,3 +17,8 @@ export enum RevenueCategory {
     Hookah = "Hookah",
     Sarthak = "Sarthak"
 }
+
+export enum CashflowType {
+  Revenue = "revenue",
+  Expense = "expense",
+}

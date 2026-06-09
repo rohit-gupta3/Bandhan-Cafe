@@ -1,3 +1,5 @@
+import { CashflowType } from "./contants";
+
 export enum PaymentMethod {
   Cash = "cash",
   Online = "online",
@@ -5,7 +7,7 @@ export enum PaymentMethod {
 
 export type CashflowItem = {
   id: number;
-  type: "revenue" | "expense";
+  type: CashflowType;
   category: string;
   amount: number;
   description: string;

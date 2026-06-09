@@ -10,6 +10,7 @@ export const apiRouter = (): Router => {
   const router = Router();
 
   router.get("/dashboard/stats", async (req, res) => {
+    console.log(req.query)
     const { data: cashflow } = await cashflowService.getAllCashFlow();
     if (!cashflow) {
       return res.json({
