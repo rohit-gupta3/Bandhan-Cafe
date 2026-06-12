@@ -251,7 +251,6 @@ export const AdminCashflow: React.FC = () => {
               <th>Date</th>
               <th>Category</th>
               <th>Description</th>
-              <th>Payment Method</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -262,7 +261,6 @@ export const AdminCashflow: React.FC = () => {
                 <td>{new Date(item.date).toLocaleDateString()}</td>
                 <td>{item.category}</td>
                 <td>{item.description}</td>
-                <td>{item.paymentMethod}</td>
                 <td>₹{item.amount.toLocaleString()}</td>
                 <td>
                   <div className="admin-actions">
@@ -327,7 +325,6 @@ export const AdminCashflow: React.FC = () => {
               <th>Date</th>
               <th>Category</th>
               <th>Description</th>
-              <th>Payment Method</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -338,7 +335,6 @@ export const AdminCashflow: React.FC = () => {
                 <td>{new Date(item.date).toLocaleDateString()}</td>
                 <td>{item.category}</td>
                 <td>{item.description}</td>
-                <td>{item.paymentMethod}</td>
                 <td>₹{item.amount.toLocaleString()}</td>
                 <td>
                   <div className="admin-actions">
@@ -500,21 +496,35 @@ export const AdminCashflow: React.FC = () => {
                     {modalType === "revenue" ? (
                       <>
                         <option value={RevenueCategory.Food}>Food</option>
-                        <option value={RevenueCategory.Beverages}>Beverages</option>
+                        <option value={RevenueCategory.Beverages}>
+                          Beverages
+                        </option>
                         <option value={RevenueCategory.Hookah}>Hookah</option>
                         <option value={RevenueCategory.Room}>Room</option>
                         <option value={RevenueCategory.Sarthak}>Sarthak</option>
                       </>
                     ) : (
                       <>
-                        <option value={ExpenseCategory.Ingredients}>Ingredients</option>
-                        <option value={ExpenseCategory.Utilities}>Utilities</option>
+                        <option value={ExpenseCategory.Ingredients}>
+                          Ingredients
+                        </option>
+                        <option value={ExpenseCategory.Utilities}>
+                          Utilities
+                        </option>
                         <option value={ExpenseCategory.Staff}>Staff</option>
-                        <option value={ExpenseCategory.Maintenance}>Maintenance</option>
-                        <option value={ExpenseCategory.Beverage}>Beverage</option>
+                        <option value={ExpenseCategory.Maintenance}>
+                          Maintenance
+                        </option>
+                        <option value={ExpenseCategory.Beverage}>
+                          Beverage
+                        </option>
                         <option value={ExpenseCategory.Hookah}>Hookah</option>
-                        <option value={ExpenseCategory.Cigarettes}>Cigarettes</option>
-                        <option value={ExpenseCategory.PayoutToOwner}>To Owner</option>
+                        <option value={ExpenseCategory.Cigarettes}>
+                          Cigarettes
+                        </option>
+                        <option value={ExpenseCategory.PayoutToOwner}>
+                          To Owner
+                        </option>
                       </>
                     )}
                   </select>
