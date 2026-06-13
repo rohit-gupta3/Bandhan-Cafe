@@ -23,6 +23,7 @@ export const AdminCashflow: React.FC = () => {
     description: "",
     amount: 0,
     paymentMethod: "cash",
+    pin: "",
   });
   const [filterYear, setFilterYear] = useState<string>("all");
   const [filterMonth, setFilterMonth] = useState<string>("all");
@@ -73,55 +74,82 @@ export const AdminCashflow: React.FC = () => {
     e.preventDefault();
 
     try {
-      if (editingItem) {
-        // Update existing item
-        await fetch(`/api/admin/cashflow/${editingItem.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-      } else {
-        // Create new item
-        await fetch("/api/admin/cashflow", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+      const url = editingItem
+        ? `/api/admin/cashflow/${editingItem.id}`
+        : "/api/admin/cashflow";
+      const method = editingItem ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        const message = result?.error || "Unable to save cashflow item.";
+        if (editingItem && response.status === 401) {
+          window.alert(`Edit restricted: ${message}`);
+        } else {
+          window.alert(message);
+        }
+        return;
       }
+
       handleCloseModal();
       await fetchCashflow();
     } catch (error) {
       console.error("Error saving cashflow item:", error);
+      window.alert("Error saving cashflow item. Please try again.");
     }
   };
 
   const handleEdit = (item: CashflowItem) => {
     setEditingItem(item);
     setModalType(item.type);
-    setFormData({
+    setFormData((prev) => ({
+      ...prev,
       type: item.type,
       category: item.category,
       amount: item.amount,
       description: item.description,
       date: item.date,
       paymentMethod: item.paymentMethod,
-    });
+    }));
     setShowModal(true);
   };
 
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
-        await fetch(`/api/admin/cashflow/${id}`, {
+        // require admin PIN for delete
+        let pin = formData.pin;
+        if (!pin) {
+          pin = window.prompt("Admin PIN:") || "";
+        }
+
+        const response = await fetch(`/api/admin/cashflow/${id}`, {
           method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pin }),
         });
+        const result = await response.json();
+        if (!response.ok) {
+          const message = result?.error || "Unable to delete cashflow item.";
+          if (response.status === 401) {
+            window.alert(`Delete restricted: ${message}`);
+          } else {
+            window.alert(message);
+          }
+          return;
+        }
+
         await fetchCashflow();
       } catch (error) {
         console.error("Error deleting cashflow item:", error);
+        window.alert("Error deleting cashflow item. Please try again.");
       }
     }
   };
@@ -136,6 +164,7 @@ export const AdminCashflow: React.FC = () => {
       description: "",
       amount: 0,
       paymentMethod: "cash",
+      pin: "",
     });
   };
 
@@ -177,14 +206,15 @@ export const AdminCashflow: React.FC = () => {
             className="admin-btn admin-btn-success"
             onClick={() => {
               setModalType("revenue");
-              setFormData({
+              setFormData((prev) => ({
+                ...prev,
                 type: "revenue",
                 date: new Date().toISOString().split("T")[0],
                 category: getDefaultCategory("revenue"),
                 description: "",
                 amount: 0,
                 paymentMethod: "cash",
-              });
+              }));
               setShowModal(true);
             }}
           >
@@ -194,14 +224,15 @@ export const AdminCashflow: React.FC = () => {
             className="admin-btn admin-btn-danger"
             onClick={() => {
               setModalType("expense");
-              setFormData({
+              setFormData((prev) => ({
+                ...prev,
                 type: "expense",
                 date: new Date().toISOString().split("T")[0],
                 category: getDefaultCategory("expense"),
                 description: "",
                 amount: 0,
                 paymentMethod: "cash",
-              });
+              }));
               setShowModal(true);
             }}
           >
@@ -229,14 +260,15 @@ export const AdminCashflow: React.FC = () => {
           className="admin-btn admin-btn-success"
           onClick={() => {
             setModalType("revenue");
-            setFormData({
+            setFormData((prev) => ({
+              ...prev,
               type: "revenue",
               date: new Date().toISOString().split("T")[0],
               category: getDefaultCategory("revenue"),
               description: "",
               amount: 0,
               paymentMethod: "cash",
-            });
+            }));
             setShowModal(true);
           }}
         >
@@ -303,14 +335,15 @@ export const AdminCashflow: React.FC = () => {
           className="admin-btn admin-btn-danger"
           onClick={() => {
             setModalType("expense");
-            setFormData({
+            setFormData((prev) => ({
+              ...prev,
               type: "expense",
               date: new Date().toISOString().split("T")[0],
               category: getDefaultCategory("expense"),
               description: "",
               amount: 0,
               paymentMethod: "cash",
-            });
+            }));
             setShowModal(true);
           }}
         >
@@ -541,6 +574,21 @@ export const AdminCashflow: React.FC = () => {
                     }
                     rows={3}
                   />
+                </div>
+
+                <div className="admin-form-row">
+                  <div className="admin-form-group" style={{ flex: 1 }}>
+                    <label className="admin-form-label">Admin PIN</label>
+                    <input
+                      type="password"
+                      className="admin-form-input"
+                      value={formData.pin}
+                      onChange={(e) =>
+                        setFormData({ ...formData, pin: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="admin-form-row">
