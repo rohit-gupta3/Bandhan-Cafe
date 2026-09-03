@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Loader } from "../../components/Loader";
 import { DashboardStats } from "../../../types";
 
-const YEARS = [2026, 'All'];
+const YEARS = [2026, "All"];
 const MONTHS = [
   { value: "1", label: "January" },
   { value: "2", label: "February" },
@@ -16,7 +16,6 @@ const MONTHS = [
   { value: "10", label: "October" },
   { value: "11", label: "November" },
   { value: "12", label: "December" },
-    { value: "All", label: "All" },
 ];
 
 const AdminDashboard: React.FC = () => {
@@ -31,7 +30,7 @@ const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const [selectedYear, setSelectedYear] = useState(String(YEARS[0]));
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("1");
 
   const fetchStats = async (year?: string, month?: string) => {
     setLoading(true);
