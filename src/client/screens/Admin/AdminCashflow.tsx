@@ -176,70 +176,108 @@ export const AdminCashflow: React.FC = () => {
     .reduce((sum, item) => sum + item.amount, 0);
   const netProfit = totalRevenue - totalExpenses;
 
-  const renderOverview = () => (
-    <div>
-      <div className="admin-stats-grid">
-        <div className="admin-stat-card">
-          <div className="admin-stat-value">
-            ₹{(totalRevenue || 0).toLocaleString()}
-          </div>
-          <p className="admin-stat-label">Total Revenue</p>
-        </div>
-        <div className="admin-stat-card">
-          <div className="admin-stat-value">
-            ₹{(totalExpenses || 0).toLocaleString()}
-          </div>
-          <p className="admin-stat-label">Total Expenses</p>
-        </div>
-        <div className={`admin-stat-card ${netProfit >= 0 ? "" : ""}`}>
-          <div className="admin-stat-value">
-            ₹{(netProfit || 0).toLocaleString()}
-          </div>
-          <p className="admin-stat-label">Net Profit</p>
-        </div>
-      </div>
+  const dailySummary = Object.entries(
+    filteredCashflow.reduce(
+      (acc, item) => {
+        const key = item.date;
+        if (!acc[key]) {
+          acc[key] = {
+            revenue: 0,
+            expense: 0,
+            payout: 0,
+          };
+        }
 
-      <div className="admin-card">
-        <h2 className="admin-card-title">Quick Actions</h2>
-        <div className="admin-btn-group">
-          <button
-            className="admin-btn admin-btn-success"
-            onClick={() => {
-              setModalType("revenue");
-              setFormData((prev) => ({
-                ...prev,
-                type: "revenue",
-                date: new Date().toISOString().split("T")[0],
-                category: getDefaultCategory("revenue"),
-                description: "",
-                amount: 0,
-                paymentMethod: "cash",
-              }));
-              setShowModal(true);
-            }}
-          >
-            Add Revenue
-          </button>
-          <button
-            className="admin-btn admin-btn-danger"
-            onClick={() => {
-              setModalType("expense");
-              setFormData((prev) => ({
-                ...prev,
-                type: "expense",
-                date: new Date().toISOString().split("T")[0],
-                category: getDefaultCategory("expense"),
-                description: "",
-                amount: 0,
-                paymentMethod: "cash",
-              }));
-              setShowModal(true);
-            }}
-          >
-            Add Expense
-          </button>
+        if (item.type === "revenue") {
+          acc[key].revenue += Number(item.amount || 0);
+        }
+
+        if (item.type === "expense") {
+          const isPayout = item.category === ExpenseCategory.PayoutToOwner;
+          if (isPayout) {
+            acc[key].payout += Number(item.amount || 0);
+          } else {
+            acc[key].expense += Number(item.amount || 0);
+          }
+        }
+
+        return acc;
+      },
+      {} as Record<
+        string,
+        { revenue: number; expense: number; payout: number }
+      >,
+    ),
+  ).sort(([dateA], [dateB]) => dateB.localeCompare(dateA));
+
+  const renderOverview = () => (
+    <div className="admin-card">
+      <h2 className="admin-card-title">Daily Summary</h2>
+
+      {dailySummary.length === 0 ? (
+        <div className="admin-empty-state">
+          <p>No cashflow data for this period.</p>
         </div>
-      </div>
+      ) : (
+        <div style={{ display: "grid", gap: "16px" }}>
+          {dailySummary.map(([date, totals]) => {
+            const netProfit = totals.revenue - totals.expense - totals.payout;
+
+            return (
+              <div
+                key={date}
+                style={{
+                  background: "#f8fafc",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "8px",
+                  padding: "16px",
+                }}
+              >
+                <h3
+                  style={{
+                    margin: "0 0 16px",
+                    color: "#2d3748",
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  {new Date(date).toLocaleDateString(undefined, {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </h3>
+
+                <div className="admin-stats-grid">
+                  <div className="admin-stat-card">
+                    <div className="admin-stat-value">
+                      ₹{(totals.revenue || 0).toLocaleString()}
+                    </div>
+                    <p className="admin-stat-label">Revenue</p>
+                  </div>
+                  <div className="admin-stat-card">
+                    <div className="admin-stat-value">
+                      ₹{(totals.expense || 0).toLocaleString()}
+                    </div>
+                    <p className="admin-stat-label">Expense</p>
+                  </div>
+                  <div className="admin-stat-card">
+                    <div className="admin-stat-value">
+                      ₹{(totals.payout || 0).toLocaleString()}
+                    </div>
+                    <p className="admin-stat-label">Payout</p>
+                  </div>
+                  <div className="admin-stat-card">
+                    <div className="admin-stat-value">
+                      ₹{(netProfit || 0).toLocaleString()}
+                    </div>
+                    <p className="admin-stat-label">Net Profit</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 
