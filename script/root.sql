@@ -8,3 +8,6 @@ create table public."Cashflow" (
   "paymentMethod" public.PaymentMethod not null default 'cash'::"PaymentMethod",
   constraint Cashflow_pkey primary key (id)
 ) TABLESPACE pg_default;
+
+ALTER table "Cashflow" Add Column updated_by varchar(50)
+ALter table "Cashflow" Add Column isDeleted boolean

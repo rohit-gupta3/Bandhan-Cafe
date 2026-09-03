@@ -5,7 +5,7 @@ import { adminKeyService } from "../service/AdminKey";
 export const cashflowRoutes = (): Router => {
   const app = express.Router();
 
-  app.get("/", async (req, res) => {
+  app.get("/", async (_req, res) => {
     try {
       const { data, error } = await cashflowService.getAllCashFlow();
       if (error) {
@@ -31,16 +31,7 @@ export const cashflowRoutes = (): Router => {
   app.post("/", async (req, res) => {
     try {
       console.log("Received cashflow entry:", req.body);
-      const { pin, ...entry } = req.body as any;
-      if (!pin) {
-        return res.status(400).json({ error: "pin required" });
-      }
-
-      const { valid, error: keyErr } = await adminKeyService.verifyPin(pin);
-      if (keyErr || !valid) {
-        console.error("AdminKey verification failed:", keyErr);
-        return res.status(401).json({ error: "Invalid admin pin" });
-      }
+      const entry = req.body as any;
 
       const { data, error } = await cashflowService.insertCashFlowEntry(entry);
       if (error) {
@@ -62,16 +53,20 @@ export const cashflowRoutes = (): Router => {
         return res.status(400).json({ error: "pin required" });
       }
 
-      const { valid, error: keyErr } = await adminKeyService.verifyPin(+pin);
+      const {
+        valid,
+        name,
+        error: keyErr,
+      } = await adminKeyService.verifyPin(+pin);
       if (keyErr || !valid) {
         console.error("AdminKey verification failed:", keyErr);
         return res.status(401).json({ error: "Invalid admin pin" });
       }
 
-      const { data, error } = await cashflowService.updateCashFlowEntry(
-        id,
-        updated,
-      );
+      const { data, error } = await cashflowService.updateCashFlowEntry(id, {
+        ...updated,
+        updated_by: name,
+      });
       if (error) {
         console.error("Supabase error:", error);
         return res.status(502).json({ error: "Failed to update entry" });

@@ -13,6 +13,8 @@ export type CashflowItem = {
   description: string;
   date: string;
   paymentMethod: PaymentMethod;
+  updated_by?: string;
+  isDeleted?: boolean;
 };
 
 export type MenuItem = {
