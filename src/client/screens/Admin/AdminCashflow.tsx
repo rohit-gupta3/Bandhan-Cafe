@@ -210,18 +210,20 @@ export const AdminCashflow: React.FC = () => {
     ),
   ).sort(([dateA], [dateB]) => dateB.localeCompare(dateA));
 
+  const recentDailySummary = dailySummary.slice(0, 30);
+
   const renderOverview = () => (
     <div className="admin-card">
       <h2 className="admin-card-title">Daily Summary</h2>
 
-      {dailySummary.length === 0 ? (
+      {recentDailySummary.length === 0 ? (
         <div className="admin-empty-state">
           <p>No cashflow data for this period.</p>
         </div>
       ) : (
         <div style={{ display: "grid", gap: "16px" }}>
-          {dailySummary.map(([date, totals]) => {
-            const netProfit = totals.revenue - totals.expense - totals.payout;
+          {recentDailySummary.map(([date, totals]) => {
+            const netProfit = totals.revenue - totals.expense;
 
             return (
               <div

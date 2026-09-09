@@ -31,7 +31,7 @@ export const cashflowRoutes = (): Router => {
   app.post("/", async (req, res) => {
     try {
       console.log("Received cashflow entry:", req.body);
-      const entry = req.body as any;
+      const { pin, ...entry } = req.body as any;
 
       const { data, error } = await cashflowService.insertCashFlowEntry(entry);
       if (error) {
