@@ -43,6 +43,8 @@ export type DashboardStats = {
   totalRevenue: number;
   totalExpenses: number;
   totalBeverageExpenses: number;
+  totalHookahRevenue: number;
+  totalHookahExpense: number;
   totalPayout: number;
   totalRoomRevenue: number;
   netProfit: number;

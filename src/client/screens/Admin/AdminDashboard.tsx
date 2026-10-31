@@ -23,8 +23,11 @@ const AdminDashboard: React.FC = () => {
     totalRevenue: 0,
     totalExpenses: 0,
     totalBeverageExpenses: 0,
+    totalHookahRevenue: 0,
+    totalHookahExpense: 0,
     totalPayout: 0,
     totalRoomRevenue: 0,
+    netProfit: 0,
   });
 
   const [loading, setLoading] = useState(false);
@@ -49,8 +52,11 @@ const AdminDashboard: React.FC = () => {
         totalRevenue: data.totalRevenue || 0,
         totalExpenses: data.totalExpenses || 0,
         totalBeverageExpenses: data.totalBeverageExpenses || 0,
+        totalHookahRevenue: data.totalHookahRevenue || 0,
+        totalHookahExpense: data.totalHookahExpense || 0,
         totalPayout: data.totalPayout || 0,
         totalRoomRevenue: data.totalRoomRevenue || 0,
+        netProfit: data.netProfit || 0,
       });
     } catch (error) {
       console.error("Error fetching dashboard stats:", error);
@@ -140,7 +146,18 @@ const AdminDashboard: React.FC = () => {
               </div>
               <p className="admin-stat-label">Beverage Expenses</p>
             </div>
-
+            <div className="admin-stat-card">
+              <div className="admin-stat-value">
+                ₹{(stats.totalHookahRevenue || 0).toLocaleString()}
+              </div>
+              <p className="admin-stat-label">Hookah Revenue</p>
+            </div>
+            <div className="admin-stat-card">
+              <div className="admin-stat-value">
+                ₹{(stats.totalHookahExpense || 0).toLocaleString()}
+              </div>
+              <p className="admin-stat-label">Hookah Expense</p>
+            </div>
             <div className="admin-stat-card">
               <div className="admin-stat-value">
                 ₹{(stats.totalRoomRevenue || 0).toLocaleString()}
@@ -152,6 +169,12 @@ const AdminDashboard: React.FC = () => {
                 ₹{(stats.totalPayout || 0).toLocaleString()}
               </div>
               <p className="admin-stat-label">Total Payout</p>
+            </div>
+            <div className="admin-stat-card">
+              <div className="admin-stat-value">
+                ₹{(stats.netProfit || 0).toLocaleString()}
+              </div>
+              <p className="admin-stat-label">Net Profit</p>
             </div>
           </div>
         </>
